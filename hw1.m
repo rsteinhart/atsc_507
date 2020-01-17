@@ -81,7 +81,7 @@ end
 % Table = Table.'; % Remove semi colon before publishing
 %% Surface Pressure 2
 z1 = 0;
-Psfc = Pms1.*exp((z1 - Zground)/(a.*T_matrix(1,:)));
+Psfc = Pms1.*exp((z1 - Zground)./(a.*T_matrix(1,:)));
 Table = [xkm(:), Zground(:), Psfc(:)];
 Table = Table.'; % Remove semi colon before publishing
 %% Question 3
