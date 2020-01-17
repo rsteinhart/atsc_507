@@ -66,8 +66,8 @@ for j=1:length(xkm)
     end
     Zground(1,j)=Zground_km;
 end
-P1 = P(1);
-z1 = alt(1,:);
+P1 = P(12);
+z1 = alt(12,:);
 Psfc = zeros(1,length(xkm));
 for n=i:length(xkm)
     P2 = P1*exp((z1(n) - Zground(n))/(a*T_matrix(1,n)));
@@ -102,9 +102,20 @@ for l=1:length(eta)
     B(1,l)=B;
 end
 
-Pd = B.*(ps-pt) + (eta-B)*(Pms1-pt) + pt;
-
-
+Pd = zeros(length(B), length(xkm));
+for q=1:length(B)
+    Pd_calc = B(q).*(Psfc-pi_top) + (eta(q)-B(q)).*(Pms1-pi_top) + pi_top;
+    Pd(q,:) = Pd_calc;
+end
+%% Plot Eta lines
+figure(2)
+hold on
+for m=1:length(B)
+    plot(xkm,Pd(m,:))
+    xlabel('x distance (km)');
+    ylabel('Pressure (kPa)');
+    title('Hybrid sigma coodinate')
+end
 %% Pressure altitude
 % z_matrix = zeros(length(P),length(xkm));
 % for k=1:length(P)-1
