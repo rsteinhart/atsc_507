@@ -1,8 +1,6 @@
 clear all
 close all
 %% Inputs
-%xkm = linspace(0,1000,1000);
-%zkm = linspace(0,30,1000);
 xkm = 0:20:1000;
 zkm = 0:1:30;
 dx = 20;
@@ -11,7 +9,7 @@ pi_top = 2;
 eta_c = 0.3;
 a = 0.0293;
 P = [100 90 80 70 60 50 40 30 20 10 5 2];
-%P = P.';
+eta = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1];
 %% Temperature
 %This loop creates a [31,51] matrix where each row represents the
 %temperatures across x for one z value
@@ -51,7 +49,7 @@ hold on
 for m=1:length(P)
     plot(xkm,alt(m,:))
     xlabel('x distance (km)');
-    ylabel('Altitude (km)');
+    ylabel('Height above sea level (km)');
     title('Altitudes for corresponding isobaric surfaces')
 end
 %% Question 2
@@ -76,10 +74,35 @@ for n=i:length(xkm)
     Psfc(1,n)=P2;    
 end
 Table = [xkm(:), Zground(:), Psfc(:)];
-Table = Table.';
+Table = Table.'; % Remove semi colon before publishing
 
+%% Question 3
+%Create a new P-x graph, on which you plot lines of constant eta, for the eta values listed below.  
+%Namely, it should look something like WRF4 figure 2.1b, but with the more realistic meteorology that I prescribed above.  
+%Also, like that figure, plot pressure P on the vertical axis in reversed order (highest pressure at the bottom of the figure), 
+%but don't use a log scale for P.
 
+%CAUTION: when calculating the values of B to use in WRF4 eq. (2.2), 
+%be advised that WRF4 eq. (2.3) applies only for eta > eta_c. Otherwise, set B = 0 for eta <= eta_c.
 
+%% Lines of constant eta
+c1 = 2*eta_c^2/(1-eta_c)^3;
+c2 = -eta_c*(4 + eta_c + eta_c^2)/(1-eta_c)^3;
+c3 = 2*(1+eta_c+eta_c^2)/(1-eta_c)^3;
+c4 = -(1+eta_c)/(1-eta_c)^3;
+
+B = zeros(1,length(eta));
+for l=1:length(eta)
+    etacalc = eta(l);
+    if etacalc>eta_c
+        B = c1 + c2*etacalc + c3*etacalc^2 + c4*etacalc^3;
+    else
+        B = 0;
+    end
+    B(1,l)=B;
+end
+
+Pd = B.*(ps-pt) + (eta-B)*(Pms1-pt) + pt;
 
 
 %% Pressure altitude
@@ -90,6 +113,3 @@ Table = Table.';
 %         z_matrix(k,:) = deltaz;
 %     end
 % end    
-
-
-
