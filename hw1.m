@@ -33,7 +33,7 @@ alt = zeros(length(P), length(xkm));
 Pms1 = 95 + 0.01.*xkm;
 z = 0; %corresponding to Pms1
 %P(1) = Pms1;
-z = -log(P(1)./Pms1)*a.*T + z;
+z = -log(P(1)./Pms1)*a.*T_matrix(1,:) + z;
 alt(1,:)=z;
 for k=2:length(P)
     if z < 12
@@ -61,9 +61,10 @@ hold on
 for m=1:length(P)
     plot(xkm,alt(m,:))
     plot(xkm,Zground)
+    ylim([0 30])
     xlabel('x distance (km)');
     ylabel('Height above sea level (km)');
-    title('Altitudes for corresponding isobaric surfaces')
+    title('Part 1 - Altitudes for corresponding isobaric surfaces')
 end
 %% Question 2
 % Interpolate to find the Psurface (kPa) pressure at Zground. Namely, it is the pressure that corresponds to eta = 1.  
@@ -101,11 +102,11 @@ B = zeros(1,length(eta));
 for l=1:length(eta)
     etacalc = eta(l);
     if etacalc > eta_c
-        B = c1 + c2*etacalc + c3*etacalc^2 + c4*etacalc^3;
+        B1 = c1 + c2*etacalc + c3*etacalc^2 + c4*etacalc^3;
     else
-        B = 0;
+        B1 = 0;
     end
-    B(1,l)=B;
+    B(1,l)=B1;
 end
 
 Pd = zeros(length(B), length(xkm));
@@ -116,11 +117,12 @@ end
 %% Plot Eta lines
 figure(2)
 hold on
-for m=1:length(B)
+for m=1:length(eta)
     plot(xkm,Pd(m,:))
+    plot(xkm,Zground)
     xlabel('x distance (km)');
     ylabel('Pressure (kPa)');
-    title('Hybrid sigma coodinate')
+    title('Part 3 - Hybrid sigma coodinate')
 end 
 %% Question 4
 %Create a new z-x graph, on which you plot the z altitudes of the constant 
@@ -146,7 +148,7 @@ for m=1:length(eta)
     plot(xkm,Zground)
     xlabel('x distance (km)');
     ylabel('z distance (km)');
-    title('Altitudes of constant eta lines')
+    title('Part 4 - Altitudes of constant eta lines')
 end
 
 
