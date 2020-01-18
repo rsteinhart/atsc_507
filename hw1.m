@@ -114,12 +114,19 @@ for q=1:length(B)
     Pd_calc = B(q).*(Psfc-pi_top) + (eta(q)-B(q)).*(Pms1-pi_top) + pi_top;
     Pd(q,:) = Pd_calc;
 end
+% Pd1 = zeros(length(B), length(xkm));
+% for q1=1:length(B)
+%     Pd_calc = Pd(q1,:).';
+%     Pd1(q1,:) = Pd_calc;
+% end
 %% Plot Eta lines
 figure(2)
 hold on
 for m=1:length(eta)
     plot(xkm,Pd(m,:))
     plot(xkm,Zground)
+    %set(axes, 'Ydir', 'reverse')
+    %axis([0 1000 100 2])
     xlabel('x distance (km)');
     ylabel('Pressure (kPa)');
     title('Part 3 - Hybrid sigma coodinate')
@@ -146,6 +153,7 @@ hold on
 for m=1:length(eta)
     plot(xkm,alt_eta(m,:))
     plot(xkm,Zground)
+    
     xlabel('x distance (km)');
     ylabel('z distance (km)');
     title('Part 4 - Altitudes of constant eta lines')
