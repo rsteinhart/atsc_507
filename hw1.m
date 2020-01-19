@@ -124,9 +124,8 @@ figure(2)
 hold on
 for m=1:length(eta)
     plot(xkm,Pd(m,:))
-    plot(xkm,Zground)
-    %set(axes, 'Ydir', 'reverse')
-    %axis([0 1000 100 2])
+    %plot(xkm,Zground)
+    set(gca, 'YDir','reverse')
     xlabel('x distance (km)');
     ylabel('Pressure (kPa)');
     title('Part 3 - Hybrid sigma coodinate')
