@@ -9,7 +9,6 @@ pi_top = 2;
 eta_c = 0.3;
 a = 0.0293;
 P = [100 90 80 70 60 50 40 30 20 10 5 2];
-%eta = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1];
 eta = [1, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0];
 %% Temperature
 %This loop creates a [31,51] matrix where each row represents the
@@ -135,7 +134,7 @@ end
 %eta lines for the same eta values as in part (3) above. Make use of the hypsometric eq 
 %to find the heights z at the pressure levels that correspond to the requested eta values.
 %% Pressures associated with eta lines
-z_eta = -log(Pd(1)./Psfc)*a.*T;
+z_eta = log(Pd(1)./Psfc)*a.*T_matrix(1,:);
 alt_eta(1,:)=z_eta;
 for k=2:length(eta)
     if z_eta < 12
@@ -152,12 +151,8 @@ hold on
 for m=1:length(eta)
     plot(xkm,alt_eta(m,:))
     plot(xkm,Zground)
-    
+    %set(gca, 'YDir','reverse')
     xlabel('x distance (km)');
     ylabel('z distance (km)');
     title('Part 4 - Altitudes of constant eta lines')
 end
-
-
-
-
