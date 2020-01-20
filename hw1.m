@@ -134,9 +134,10 @@ end
 %eta lines for the same eta values as in part (3) above. Make use of the hypsometric eq 
 %to find the heights z at the pressure levels that correspond to the requested eta values.
 %% Pressures associated with eta lines
+alt_eta = zeros(length(eta),length(xkm));
 z_eta = log(Pd(1)./Psfc)*a.*T_matrix(1,:);
 alt_eta(1,:)=z_eta;
-for k=2:length(eta)
+for k=2:length(eta)-4
     if z_eta < 12
         T = (40 - 0.08.*xkm) - 6.5*z_eta + 273; %K
     else
@@ -145,12 +146,17 @@ for k=2:length(eta)
     z_eta = -log(Pd(k)./Pd(k-1))*a.*T + z_eta;
     alt_eta(k,:)=z_eta;
 end
+
+for r=1:3
+    alt_eta(9+r,:)=alt(8+r,:);    
+end
 %% Plot Eta lines
 figure(3)
 hold on
 for m=1:length(eta)
     plot(xkm,alt_eta(m,:))
     plot(xkm,Zground)
+    ylim([0 18])
     %set(gca, 'YDir','reverse')
     xlabel('x distance (km)');
     ylabel('z distance (km)');
