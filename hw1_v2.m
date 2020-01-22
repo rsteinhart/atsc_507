@@ -1,15 +1,13 @@
 %%
 % Rachel Steinhart
 % ATSC 507 Homework 1
-% January 21st, 2020
+% January 22st, 2020
 %%
 clear all
 close all
 %% Inputs
 xkm = 0:20:1000;
-zkm = 0:1:30;
-% dx = 20;
-% dz = 1;
+zkm = 0:0.001:30;
 pi_top = 2;
 eta_c = 0.3;
 a = 0.0293;
@@ -53,6 +51,7 @@ for j=1:length(xkm)
     end
     Zground(1,j)=Zground_km;
 end
+
 %% Plot Altitudes
 figure(1)
 hold on
@@ -110,7 +109,7 @@ for m=1:length(eta)
     xlabel('x distance (km)');
     ylabel('Pressure (kPa)');
     ylim([0 100]);
-    title('Part 3 - Hybrid sigma coodinate')
+    title('Part 3 - Lines of constant eta')
 end 
 %% Question 4
 %Create a new z-x graph, on which you plot the z altitudes of the constant 
@@ -118,21 +117,23 @@ end
 %to find the heights z at the pressure levels that correspond to the requested eta values.
 %% Pressures associated with eta lines
 alt_eta = zeros(length(eta),length(xkm));
-z_eta = Zground;
+z_eta(1,:) = Zground;
+alt_eta(1,:)=z_eta(1,:);
 
-alt_eta(1,:)=z_eta;
 for k=2:length(eta)
-    z_eta = -log(Pd(k)./Pd(k-1))*a.*T_matrix(k,:) + z_eta;
-    alt_eta(k,:)=z_eta;
+    z_eta(k,:) = (-log(Pd(k,:)./Pd(k-1,:))*a.*T_matrix(k,:)) + z_eta(k-1,:);
+    %alt_eta(k,:)=z_eta;
+    %z_eta1=z_eta2;
 end
+
 %% Plot Eta lines
 figure(3)
 hold on
 for m=1:length(eta)
-    plot(xkm,alt_eta(m,:))
+    plot(xkm,z_eta(m,:))
     plot(xkm,Zground)
-    ylim([0 30])
+    ylim([0 20])
     xlabel('x distance (km)');
     ylabel('z distance (km)');
-    title('Part 4 - Altitudes of constant eta lines')
+    title('Part 4 - Altitudes of constant eta lines');
 end
