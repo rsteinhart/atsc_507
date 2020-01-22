@@ -1,3 +1,8 @@
+%%
+% Rachel Steinhart
+% ATSC 507 Homework 1
+% January 21st, 2020
+%%
 clear all
 close all
 %% Inputs
@@ -23,7 +28,7 @@ for i=1:length(zkm)
     end
     T_matrix(i,:) = T;
 end
-%% Q1)
+%% Question 1
 %Find:  On an x-z graph, plot the altitudes (km) of the following isobaric surfaces:
 %100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 2 kPa.
 %On the same plot, plot the altitude of Zground. 
@@ -72,7 +77,7 @@ end
 z1 = 0;
 Psfc = Pms1.*exp((z1 - Zground)./(a.*T_matrix(1,:)));
 Table = [xkm(:), Zground(:), Psfc(:)];
-Table = Table.'; % Remove semi colon before publishing
+Table = Table.'
 %% Question 3
 %Create a new P-x graph, on which you plot lines of constant eta, for the eta values listed below.  
 %Namely, it should look something like WRF4 figure 2.1b, but with the more realistic meteorology that I prescribed above.  
@@ -140,7 +145,7 @@ hold on
 for m=1:length(eta)
     plot(xkm,alt_eta(m,:))
     plot(xkm,Zground)
-    ylim([0 18])
+    ylim([0 30])
     xlabel('x distance (km)');
     ylabel('z distance (km)');
     title('Part 4 - Altitudes of constant eta lines')
