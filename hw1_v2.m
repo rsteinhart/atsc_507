@@ -122,8 +122,6 @@ alt_eta(1,:)=z_eta(1,:);
 
 for k=2:length(eta)
     z_eta(k,:) = (-log(Pd(k,:)./Pd(k-1,:))*a.*T_matrix(k,:)) + z_eta(k-1,:);
-    %alt_eta(k,:)=z_eta;
-    %z_eta1=z_eta2;
 end
 
 %% Plot Eta lines
