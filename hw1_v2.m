@@ -7,7 +7,7 @@ clear all
 close all
 %% Inputs
 xkm = 0:20:1000;
-zkm = 0:0.001:30;
+zkm = 0:1:30;
 pi_top = 2;
 eta_c = 0.3;
 a = 0.0293;
@@ -108,7 +108,6 @@ for m=1:length(eta)
     set(gca, 'YDir','reverse')
     xlabel('x distance (km)');
     ylabel('Pressure (kPa)');
-    ylim([0 100]);
     title('Part 3 - Lines of constant eta')
 end 
 %% Question 4
@@ -116,9 +115,9 @@ end
 %eta lines for the same eta values as in part (3) above. Make use of the hypsometric eq 
 %to find the heights z at the pressure levels that correspond to the requested eta values.
 %% Pressures associated with eta lines
-alt_eta = zeros(length(eta),length(xkm));
+%alt_eta = zeros(length(eta),length(xkm));
 z_eta(1,:) = Zground;
-alt_eta(1,:)=z_eta(1,:);
+%alt_eta(1,:)=z_eta(1,:);
 
 for k=2:length(eta)
     z_eta(k,:) = (-log(Pd(k,:)./Pd(k-1,:))*a.*T_matrix(k,:)) + z_eta(k-1,:);
@@ -130,8 +129,28 @@ hold on
 for m=1:length(eta)
     plot(xkm,z_eta(m,:))
     plot(xkm,Zground)
-    ylim([0 20])
+    %ylim([0 20])
     xlabel('x distance (km)');
     ylabel('z distance (km)');
     title('Part 4 - Altitudes of constant eta lines');
 end
+
+%% Solve for eta
+eta_matrix = zeros(length(eta),length(xkm));
+for n=1:length(eta)
+    eta_calc = (Pd(n,:) - pi_top)./(Psfc(1,:) - pi_top);
+    eta_matrix(n,:) = eta_calc;
+    
+end
+
+figure(4)
+hold on
+plot(xkm,Zground);
+[C1,h1]=contour(xkm,zkm,Pressure,Pd(1,:));
+clabel(C1,h1)
+xlabel('Horizontal distance (km)');
+ylabel('Vertical distance (km)');
+title('Part 4 - Altituges of constant eta lines');
+
+
+
