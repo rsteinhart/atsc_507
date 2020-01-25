@@ -7,7 +7,7 @@ clear all
 close all
 %% Inputs
 xkm = 0:20:1000;
-zkm = 0:1:30;
+zkm = 0:0.001:30;
 pi_top = 2;
 eta_c = 0.3;
 a = 0.0293;
@@ -142,15 +142,28 @@ for n=1:length(eta)
     eta_matrix(n,:) = eta_calc;
     
 end
+% 
+% 
+% for o=1:length(eta)
+%     figure(4)
+%     hold on
+%     plot(xkm,Zground);
+%     [C1,h1]=contour(xkm,zkm,Pressure,Pd(o,:));
+%     clabel(C1,h1)
+%     xlabel('Horizontal distance (km)');
+%     ylabel('Vertical distance (km)');
+%     title('Part 4 - Altituges of constant eta lines');
+%         
+% 
+%     
+% end
 
 figure(4)
 hold on
 plot(xkm,Zground);
-[C1,h1]=contour(xkm,zkm,Pressure,Pd(1,:));
+[C1,h1]=contour(xkm,zkm,Pd);
 clabel(C1,h1)
 xlabel('Horizontal distance (km)');
 ylabel('Vertical distance (km)');
 title('Part 4 - Altituges of constant eta lines');
-
-
 
