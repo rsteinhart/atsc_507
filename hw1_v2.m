@@ -115,14 +115,20 @@ end
 %eta lines for the same eta values as in part (3) above. Make use of the hypsometric eq 
 %to find the heights z at the pressure levels that correspond to the requested eta values.
 %% Pressures associated with eta lines
-%alt_eta = zeros(length(eta),length(xkm));
+z_eta = zeros(length(eta), length(xkm));
 z_eta(1,:) = Zground;
-%alt_eta(1,:)=z_eta(1,:);
-
-for k=2:length(eta)
-    z_eta(k,:) = (-log(Pd(k,:)./Pd(k-1,:))*a.*T_matrix(k,:)) + z_eta(k-1,:);
+T_eta = zeros(length(eta),length(xkm));
+for k=1:length(eta)-1
+    %for z=1:length(zkm)
+    if z_eta(k,:) < 12
+        T_eta(k,:) = (40 - 0.08.*xkm(1,:)) - 6.5*z_eta(k,:) + 273; %K
+    else
+        T_eta(k,:) = (40-0.08.*xkm) - 6.5*12 + 273; %K
+    end
+    z_eta(k+1,:) = (-log(Pd(k+1,:)./Pd(k,:))*a.*T_eta(k,:)) + z_eta(k,:);
+    %end
+     
 end
-
 %% Plot Eta lines
 figure(3)
 hold on
@@ -135,13 +141,25 @@ for m=1:length(eta)
     title('Part 4 - Altitudes of constant eta lines');
 end
 
+%% Old codes
+% %alt_eta = zeros(length(eta),length(xkm));
+% z_eta(1,:) = Zground;
+% %alt_eta(1,:)=z_eta(1,:);
+% 
+% for k=2:length(eta)
+%     z_eta(k,:) = (-log(Pd(k,:)./Pd(k-1,:))*a.*T_matrix(k,:)) + z_eta(k-1,:);
+% end
+% 
+
+
 %% Solve for eta
-eta_matrix = zeros(length(eta),length(xkm));
-for n=1:length(eta)
-    eta_calc = (Pd(n,:) - pi_top)./(Psfc(1,:) - pi_top);
-    eta_matrix(n,:) = eta_calc;
-    
-end
+% eta_matrix = zeros(length(eta),length(xkm));
+% for n=1:length(eta)
+%     eta_calc = (Pd(n,:) - pi_top)./(Psfc(1,:) - pi_top);
+%     eta_matrix(n,:) = eta_calc;
+%     
+% end
+
 % 
 % 
 % for o=1:length(eta)
@@ -158,12 +176,12 @@ end
 %     
 % end
 
-figure(4)
-hold on
-plot(xkm,Zground);
-[C1,h1]=contour(xkm,zkm,Pd);
-clabel(C1,h1)
-xlabel('Horizontal distance (km)');
-ylabel('Vertical distance (km)');
-title('Part 4 - Altituges of constant eta lines');
+% figure(4)
+% hold on
+% plot(xkm,Zground);
+% [C1,h1]=contour(xkm,zkm,Pd);
+% clabel(C1,h1)
+% xlabel('Horizontal distance (km)');
+% ylabel('Vertical distance (km)');
+% title('Part 4 - Altituges of constant eta lines');
 
