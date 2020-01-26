@@ -123,7 +123,7 @@ for k=1:length(eta)-1
     if z_eta(k,:) < 12
         T_eta(k,:) = (40 - 0.08.*xkm(1,:)) - 6.5*z_eta(k,:) + 273; %K
     else
-        T_eta(k,:) = (40-0.08.*xkm) - 6.5*12 + 273; %K
+        T_eta(k,:) = (40-0.08.*xkm(1,:)) - 6.5*12 + 273; %K
     end
     z_eta(k+1,:) = (-log(Pd(k+1,:)./Pd(k,:))*a.*T_eta(k,:)) + z_eta(k,:);
     %end
