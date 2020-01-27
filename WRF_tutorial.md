@@ -35,3 +35,12 @@
   161  cd ~
   162  vi ./.bashrc
   163  history
+
+  Thursday:
+  - "DC $SCRATCHDIR" for all runs
+  - to edit a script press i once in vi
+  - to finish editing press esc
+  - ":wq" to write and save file
+  - "ls -lh geogrid.exe" to see where the link goes to
+  - "ln <file name>" to link to a file in another folder
+  - ungrib takes national weather service forecast data 

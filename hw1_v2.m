@@ -121,7 +121,7 @@ T_eta = zeros(length(eta),length(xkm));
 for k=1:length(eta)-1
     %for z=1:length(zkm)
     if z_eta(k,:) < 12
-        T_eta(k,:) = (40 - 0.08.*xkm(1,:)) - 6.5*z_eta(k,:) + 273; %K
+        T_eta(k,:) = (40 - 0.08.*xkm(1,:)) - 6.5.*z_eta(k,:) + 273; %K
     else
         T_eta(k,:) = (40-0.08.*xkm(1,:)) - 6.5*12 + 273; %K
     end
