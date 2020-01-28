@@ -43,7 +43,6 @@ end
 %% Zground
 Zground=zeros(1,length(xkm));
 for j=1:length(xkm)
-    %xkm_calc=xkm(j);
     if 250 < xkm(j) && xkm(j) < 750
         Zground_km = 1 + cos(2*3.14159.*(xkm(j) - 500)/500);
     else
@@ -119,14 +118,12 @@ z_eta = zeros(length(eta), length(xkm));
 z_eta(1,:) = Zground;
 T_eta = zeros(length(eta),length(xkm));
 for k=1:length(eta)-1
-    %for z=1:length(zkm)
     if z_eta(k,:) < 12
         T_eta(k,:) = (40 - 0.08.*xkm(1,:)) - 6.5.*z_eta(k,:) + 273; %K
     else
         T_eta(k,:) = (40-0.08.*xkm(1,:)) - 6.5*12 + 273; %K
     end
     z_eta(k+1,:) = (-log(Pd(k+1,:)./Pd(k,:))*a.*T_eta(k,:)) + z_eta(k,:);
-    %end
      
 end
 %% Plot Eta lines
@@ -135,7 +132,6 @@ hold on
 for m=1:length(eta)
     plot(xkm,z_eta(m,:))
     plot(xkm,Zground)
-    %ylim([0 20])
     xlabel('x distance (km)');
     ylabel('z distance (km)');
     title('Part 4 - Altitudes of constant eta lines');
