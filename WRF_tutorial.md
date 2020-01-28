@@ -40,7 +40,10 @@
   - "DC $SCRATCHDIR" for all runs
   - to edit a script press i once in vi
   - to finish editing press esc
-  - ":wq" to write and save file
+  - "esc" & ":wq" to write and save file
   - "ls -lh geogrid.exe" to see where the link goes to
   - "ln <file name>" to link to a file in another folder
   - ungrib takes national weather service forecast data 
+
+  Tuesday Jan. 28th:
+  - "ls -lh" = more info on things
