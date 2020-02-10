@@ -1,5 +1,6 @@
 # %%
 import pandas as pd
+import pylab as pl 
 
 
 # %% 
@@ -22,3 +23,4 @@ for elem in new_files:
     df.columns = ['lat', 'long']
 
 # %%
+new_files = ['new-africa-cil.txt', 'new-asia-cil.txt', 'new-europe-cil.txt', 'new-namer-cil.txt', 'new-samer-cil.txt']
