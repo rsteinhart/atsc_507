@@ -1,0 +1,377 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>hw1_final_RS</title><meta name="generator" content="MATLAB 9.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-01-28"><meta name="DC.source" content="hw1_final_RS.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><p>Rachel Steinhart ATSC 507 Homework 1 January 27st, 2020</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">Inputs</a></li><li><a href="#3">Question 1</a></li><li><a href="#4">Temperature</a></li><li><a href="#5">Pressure</a></li><li><a href="#6">Zground</a></li><li><a href="#7">Plot Altitudes</a></li><li><a href="#8">Question 2</a></li><li><a href="#9">Surface Pressure 2</a></li><li><a href="#10">Question 3</a></li><li><a href="#11">Lines of constant eta</a></li><li><a href="#12">Plot Eta lines</a></li><li><a href="#13">Question 4</a></li><li><a href="#14">Pressures associated with eta lines</a></li><li><a href="#15">Plot Eta lines</a></li></ul></div><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+</pre><h2>Inputs<a name="2"></a></h2><pre class="codeinput">xkm = 0:20:1000;
+zkm = 0:0.001:30;
+pi_top = 2;
+eta_c = 0.3;
+a = 0.0293;
+P = [100 90 80 70 60 50 40 30 20 10 5 2];
+eta = [1, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0];
+</pre><h2>Question 1<a name="3"></a></h2><pre class="codeinput"><span class="comment">%Find:  On an x-z graph, plot the altitudes (km) of the following isobaric surfaces:</span>
+<span class="comment">%100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 2 kPa.</span>
+<span class="comment">%On the same plot, plot the altitude of Zground.</span>
+</pre><h2>Temperature<a name="4"></a></h2><pre class="codeinput"><span class="comment">%This loop creates a [31,51] matrix where each row represents the</span>
+<span class="comment">%temperatures across x for one z value</span>
+T_matrix = zeros(length(zkm),length(xkm));
+<span class="keyword">for</span> i=1:length(zkm)
+    zkm_calc = zkm(i);
+    <span class="keyword">if</span> zkm_calc &lt; 12
+        T = (40 - 0.08.*xkm) - 6.5*zkm_calc + 273; <span class="comment">%K</span>
+    <span class="keyword">else</span>
+        T = (40-0.08.*xkm) - 6.5*12 + 273; <span class="comment">%K</span>
+    <span class="keyword">end</span>
+    T_matrix(i,:) = T;
+<span class="keyword">end</span>
+</pre><h2>Pressure<a name="5"></a></h2><pre class="codeinput">Pressure = zeros(length(zkm),length(xkm));
+Pms1 = 95 + 0.01.*xkm;
+Pressure(1,:) = Pms1;
+<span class="keyword">for</span> j=1:length(zkm)-1
+    P2 = Pressure(j,:).*exp((zkm(j) - zkm(j+1))./(a.*T_matrix(j+1,:)));
+    Pressure(j+1,:) = P2;
+<span class="keyword">end</span>
+</pre><h2>Zground<a name="6"></a></h2><pre class="codeinput">Zground=zeros(1,length(xkm));
+<span class="keyword">for</span> j=1:length(xkm)
+    <span class="keyword">if</span> 250 &lt; xkm(j) &amp;&amp; xkm(j) &lt; 750
+        Zground_km = 1 + cos(2*3.14159.*(xkm(j) - 500)/500);
+    <span class="keyword">else</span>
+        Zground_km = 0;
+    <span class="keyword">end</span>
+    Zground(1,j)=Zground_km;
+<span class="keyword">end</span>
+</pre><h2>Plot Altitudes<a name="7"></a></h2><pre class="codeinput">figure(1)
+hold <span class="string">on</span>
+plot(xkm,Zground);
+[C,h]=contour(xkm,zkm,Pressure,P);
+clabel(C,h)
+xlabel(<span class="string">'Horizontal distance (km)'</span>);
+ylabel(<span class="string">'Vertical distance (km)'</span>);
+title(<span class="string">'Altitudes of Isobaric sufaces labeled in kPa'</span>);
+</pre><img vspace="5" hspace="5" src="hw1_final_RS_01.png" alt=""> <h2>Question 2<a name="8"></a></h2><p>Interpolate to find the Psurface (kPa) pressure at Zground. Namely, it is the pressure that corresponds to eta = 1.</p><pre class="codeinput"><span class="comment">%This pressure that you use to find eta in exercises (3) &amp; (4).</span>
+</pre><h2>Surface Pressure 2<a name="9"></a></h2><pre class="codeinput">z1 = 0;
+Psfc = Pms1.*exp((z1 - Zground)./(a.*T_matrix(1,:)));
+Table = [xkm(:), Zground(:), Psfc(:)];
+Table = Table.'
+</pre><pre class="codeoutput">
+Table =
+
+   1.0e+03 *
+
+  Columns 1 through 7
+
+         0    0.0200    0.0400    0.0600    0.0800    0.1000    0.1200
+         0         0         0         0         0         0         0
+    0.0950    0.0952    0.0954    0.0956    0.0958    0.0960    0.0962
+
+  Columns 8 through 14
+
+    0.1400    0.1600    0.1800    0.2000    0.2200    0.2400    0.2600
+         0         0         0         0         0         0    0.0000
+    0.0964    0.0966    0.0968    0.0970    0.0972    0.0974    0.0975
+
+  Columns 15 through 21
+
+    0.2800    0.3000    0.3200    0.3400    0.3600    0.3800    0.4000
+    0.0001    0.0002    0.0004    0.0006    0.0008    0.0011    0.0013
+    0.0970    0.0958    0.0941    0.0919    0.0894    0.0869    0.0844
+
+  Columns 22 through 28
+
+    0.4200    0.4400    0.4600    0.4800    0.5000    0.5200    0.5400
+    0.0015    0.0017    0.0019    0.0020    0.0020    0.0020    0.0019
+    0.0822    0.0804    0.0790    0.0781    0.0779    0.0782    0.0792
+
+  Columns 29 through 35
+
+    0.5600    0.5800    0.6000    0.6200    0.6400    0.6600    0.6800
+    0.0017    0.0015    0.0013    0.0011    0.0008    0.0006    0.0004
+    0.0807    0.0828    0.0853    0.0882    0.0912    0.0942    0.0970
+
+  Columns 36 through 42
+
+    0.7000    0.7200    0.7400    0.7600    0.7800    0.8000    0.8200
+    0.0002    0.0001    0.0000         0         0         0         0
+    0.0994    0.1012    0.1023    0.1026    0.1028    0.1030    0.1032
+
+  Columns 43 through 49
+
+    0.8400    0.8600    0.8800    0.9000    0.9200    0.9400    0.9600
+         0         0         0         0         0         0         0
+    0.1034    0.1036    0.1038    0.1040    0.1042    0.1044    0.1046
+
+  Columns 50 through 51
+
+    0.9800    1.0000
+         0         0
+    0.1048    0.1050
+
+</pre><h2>Question 3<a name="10"></a></h2><pre class="codeinput"><span class="comment">%Create a new P-x graph, on which you plot lines of constant eta, for the eta values listed below.</span>
+<span class="comment">%Namely, it should look something like WRF4 figure 2.1b, but with the more realistic meteorology that I prescribed above.</span>
+<span class="comment">%Also, like that figure, plot pressure P on the vertical axis in reversed order (highest pressure at the bottom of the figure),</span>
+<span class="comment">%but don't use a log scale for P.</span>
+
+<span class="comment">%CAUTION: when calculating the values of B to use in WRF4 eq. (2.2),</span>
+<span class="comment">%be advised that WRF4 eq. (2.3) applies only for eta &gt; eta_c. Otherwise, set B = 0 for eta &lt;= eta_c.</span>
+</pre><h2>Lines of constant eta<a name="11"></a></h2><pre class="codeinput">c1 = 2*eta_c^2/(1-eta_c)^3;
+c2 = -eta_c*(4 + eta_c + eta_c^2)/(1-eta_c)^3;
+c3 = 2*(1+eta_c+eta_c^2)/(1-eta_c)^3;
+c4 = -(1+eta_c)/(1-eta_c)^3;
+
+B = zeros(1,length(eta));
+<span class="keyword">for</span> l=1:length(eta)
+    etacalc = eta(l);
+    <span class="keyword">if</span> etacalc &gt; eta_c
+        B1 = c1 + c2*etacalc + c3*etacalc^2 + c4*etacalc^3;
+    <span class="keyword">else</span>
+        B1 = 0;
+    <span class="keyword">end</span>
+    B(1,l)=B1;
+<span class="keyword">end</span>
+
+Pd = zeros(length(B), length(xkm));
+<span class="keyword">for</span> q=1:length(B)
+    Pd_calc = B(q).*(Psfc-pi_top) + (eta(q)-B(q)).*(100-pi_top) + pi_top;
+    Pd(q,:) = Pd_calc;
+<span class="keyword">end</span>
+</pre><h2>Plot Eta lines<a name="12"></a></h2><pre class="codeinput">figure(2)
+hold <span class="string">on</span>
+<span class="keyword">for</span> m=1:length(eta)
+    plot(xkm,Pd(m,:))
+    set(gca, <span class="string">'YDir'</span>,<span class="string">'reverse'</span>)
+    xlabel(<span class="string">'x distance (km)'</span>);
+    ylabel(<span class="string">'Pressure (kPa)'</span>);
+    title(<span class="string">'Part 3 - Lines of constant eta'</span>)
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="hw1_final_RS_02.png" alt=""> <h2>Question 4<a name="13"></a></h2><pre class="codeinput"><span class="comment">%Create a new z-x graph, on which you plot the z altitudes of the constant</span>
+<span class="comment">%eta lines for the same eta values as in part (3) above. Make use of the hypsometric eq</span>
+<span class="comment">%to find the heights z at the pressure levels that correspond to the requested eta values.</span>
+</pre><h2>Pressures associated with eta lines<a name="14"></a></h2><pre class="codeinput">z_eta = zeros(length(eta), length(xkm));
+z_eta(1,:) = Zground;
+T_eta = zeros(length(eta),length(xkm));
+<span class="keyword">for</span> k=1:length(eta)-1
+    <span class="keyword">if</span> z_eta(k,:) &lt; 12
+        T_eta(k,:) = (40 - 0.08.*xkm(1,:)) - 6.5.*z_eta(k,:) + 273; <span class="comment">%K</span>
+    <span class="keyword">else</span>
+        T_eta(k,:) = (40-0.08.*xkm(1,:)) - 6.5*12 + 273; <span class="comment">%K</span>
+    <span class="keyword">end</span>
+    z_eta(k+1,:) = (-log(Pd(k+1,:)./Pd(k,:))*a.*T_eta(k,:)) + z_eta(k,:);
+
+<span class="keyword">end</span>
+</pre><h2>Plot Eta lines<a name="15"></a></h2><pre class="codeinput">figure(3)
+hold <span class="string">on</span>
+<span class="keyword">for</span> m=1:length(eta)
+    plot(xkm,z_eta(m,:))
+    plot(xkm,Zground)
+    xlabel(<span class="string">'x distance (km)'</span>);
+    ylabel(<span class="string">'z distance (km)'</span>);
+    title(<span class="string">'Part 4 - Altitudes of constant eta lines'</span>);
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="hw1_final_RS_03.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%
+% Rachel Steinhart
+% ATSC 507 Homework 1
+% January 27st, 2020
+%%
+clear all
+close all
+%% Inputs
+xkm = 0:20:1000;
+zkm = 0:0.001:30;
+pi_top = 2;
+eta_c = 0.3;
+a = 0.0293;
+P = [100 90 80 70 60 50 40 30 20 10 5 2];
+eta = [1, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0];
+%% Question 1
+%Find:  On an x-z graph, plot the altitudes (km) of the following isobaric surfaces:
+%100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 2 kPa.
+%On the same plot, plot the altitude of Zground. 
+%% Temperature
+%This loop creates a [31,51] matrix where each row represents the
+%temperatures across x for one z value
+T_matrix = zeros(length(zkm),length(xkm));
+for i=1:length(zkm)
+    zkm_calc = zkm(i);
+    if zkm_calc < 12
+        T = (40 - 0.08.*xkm) - 6.5*zkm_calc + 273; %K
+    else
+        T = (40-0.08.*xkm) - 6.5*12 + 273; %K
+    end
+    T_matrix(i,:) = T;
+end
+
+%% Pressure
+Pressure = zeros(length(zkm),length(xkm));
+Pms1 = 95 + 0.01.*xkm;
+Pressure(1,:) = Pms1;
+for j=1:length(zkm)-1
+    P2 = Pressure(j,:).*exp((zkm(j) - zkm(j+1))./(a.*T_matrix(j+1,:)));
+    Pressure(j+1,:) = P2;
+end
+
+%% Zground
+Zground=zeros(1,length(xkm));
+for j=1:length(xkm)
+    if 250 < xkm(j) && xkm(j) < 750
+        Zground_km = 1 + cos(2*3.14159.*(xkm(j) - 500)/500);
+    else
+        Zground_km = 0;
+    end
+    Zground(1,j)=Zground_km;
+end
+
+%% Plot Altitudes
+figure(1)
+hold on
+plot(xkm,Zground);
+[C,h]=contour(xkm,zkm,Pressure,P);
+clabel(C,h)
+xlabel('Horizontal distance (km)');
+ylabel('Vertical distance (km)');
+title('Altitudes of Isobaric sufaces labeled in kPa');
+
+%% Question 2
+% Interpolate to find the Psurface (kPa) pressure at Zground. Namely, it is the pressure that corresponds to eta = 1.  
+%This pressure that you use to find eta in exercises (3) & (4).
+%% Surface Pressure 2
+z1 = 0;
+Psfc = Pms1.*exp((z1 - Zground)./(a.*T_matrix(1,:)));
+Table = [xkm(:), Zground(:), Psfc(:)];
+Table = Table.'
+%% Question 3
+%Create a new P-x graph, on which you plot lines of constant eta, for the eta values listed below.  
+%Namely, it should look something like WRF4 figure 2.1b, but with the more realistic meteorology that I prescribed above.  
+%Also, like that figure, plot pressure P on the vertical axis in reversed order (highest pressure at the bottom of the figure), 
+%but don't use a log scale for P.
+
+%CAUTION: when calculating the values of B to use in WRF4 eq. (2.2), 
+%be advised that WRF4 eq. (2.3) applies only for eta > eta_c. Otherwise, set B = 0 for eta <= eta_c.
+%% Lines of constant eta
+c1 = 2*eta_c^2/(1-eta_c)^3;
+c2 = -eta_c*(4 + eta_c + eta_c^2)/(1-eta_c)^3;
+c3 = 2*(1+eta_c+eta_c^2)/(1-eta_c)^3;
+c4 = -(1+eta_c)/(1-eta_c)^3;
+
+B = zeros(1,length(eta));
+for l=1:length(eta)
+    etacalc = eta(l);
+    if etacalc > eta_c
+        B1 = c1 + c2*etacalc + c3*etacalc^2 + c4*etacalc^3;
+    else
+        B1 = 0;
+    end
+    B(1,l)=B1;
+end
+
+Pd = zeros(length(B), length(xkm));
+for q=1:length(B)
+    Pd_calc = B(q).*(Psfc-pi_top) + (eta(q)-B(q)).*(100-pi_top) + pi_top;
+    Pd(q,:) = Pd_calc;
+end
+%% Plot Eta lines
+figure(2)
+hold on
+for m=1:length(eta)
+    plot(xkm,Pd(m,:))
+    set(gca, 'YDir','reverse')
+    xlabel('x distance (km)');
+    ylabel('Pressure (kPa)');
+    title('Part 3 - Lines of constant eta')
+end 
+%% Question 4
+%Create a new z-x graph, on which you plot the z altitudes of the constant 
+%eta lines for the same eta values as in part (3) above. Make use of the hypsometric eq 
+%to find the heights z at the pressure levels that correspond to the requested eta values.
+%% Pressures associated with eta lines
+z_eta = zeros(length(eta), length(xkm));
+z_eta(1,:) = Zground;
+T_eta = zeros(length(eta),length(xkm));
+for k=1:length(eta)-1
+    if z_eta(k,:) < 12
+        T_eta(k,:) = (40 - 0.08.*xkm(1,:)) - 6.5.*z_eta(k,:) + 273; %K
+    else
+        T_eta(k,:) = (40-0.08.*xkm(1,:)) - 6.5*12 + 273; %K
+    end
+    z_eta(k+1,:) = (-log(Pd(k+1,:)./Pd(k,:))*a.*T_eta(k,:)) + z_eta(k,:);
+     
+end
+%% Plot Eta lines
+figure(3)
+hold on
+for m=1:length(eta)
+    plot(xkm,z_eta(m,:))
+    plot(xkm,Zground)
+    xlabel('x distance (km)');
+    ylabel('z distance (km)');
+    title('Part 4 - Altitudes of constant eta lines');
+end
+##### SOURCE END #####
+--></body></html>
