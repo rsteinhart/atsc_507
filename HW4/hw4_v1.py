@@ -1,19 +1,17 @@
-# %%
-import numpy as np
+# # %%
+# import numpy as np
 # %%
 #Question setup
 Tref_0=2
 A=1
 c=1.5
 delta_t=1
-#t=m*delta_t
-
 T_ref = 2
 t=1 #?
-m = t/delta_t
 
-#t = np.linspace(0,1000,1000/delta_t)
-#T = A*(c*m*delta_t + Tref -Tref_0)*(Tref_0-c*m*delta_t)
+m = t/delta_t
+#t=m*delta_t
+
 def slope(T,t):
     delT_delt = 1.5*(2-1.5*t-(T/(2-1.5*t)))
     return(delT_delt)
@@ -26,9 +24,7 @@ print('Euler Forward: T at the following timestep is', T_n1)
 
 # %%
 #RK2
-#delT_delt = slope(T_ref, t)
 T_star = T_ref + (delta_t/2)*slope(T_ref, t)
-#delTstar_delt = slope(T_star,t)
 T_n1_RK2 = T_ref + delta_t*slope(T_star,t)
 print('RK2: T at the following timestep is', T_n1_RK2)
 
@@ -61,3 +57,6 @@ print('RK3:', T_n1_RK3)
 print('RK4:', T_n1_RK4)
 print('Analytical:', T)
 print('We can see that RK4 was the method that gave the closest answer to the analytical solution')
+
+
+# %%
