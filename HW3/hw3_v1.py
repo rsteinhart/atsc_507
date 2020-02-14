@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 # %% 
 # Take out all the rows with segment, rant and points 
 # to only leave latlong coords. and make new files
-#files = ['africa-cil.txt', 'asia-cil.txt', 'europe-cil.txt', 'namer-cil.txt', 'samer-cil.txt']
-files = ['asia-cil.txt', 'europe-cil.txt', 'namer-cil.txt']
+files = ['africa-cil.txt', 'asia-cil.txt', 'europe-cil.txt', 'namer-cil.txt', 'samer-cil.txt']
+#files = ['asia-cil.txt', 'europe-cil.txt', 'namer-cil.txt']
 bad_words = ['segment', 'rank', 'points']
 new = 'new-'
 for elem in files:
@@ -19,8 +19,8 @@ for elem in files:
 # print(c)
 # %%
 df_total = pd.DataFrame({'lat': [ ], 'long': [ ]})
-#new_files = ['new-africa-cil.txt','new-asia-cil.txt', 'new-europe-cil.txt', 'new-namer-cil.txt', 'new-samer-cil.txt']
-new_files = ['new-asia-cil.txt', 'new-europe-cil.txt', 'new-namer-cil.txt']
+new_files = ['new-africa-cil.txt','new-asia-cil.txt', 'new-europe-cil.txt', 'new-namer-cil.txt', 'new-samer-cil.txt']
+#new_files = ['new-asia-cil.txt', 'new-europe-cil.txt', 'new-namer-cil.txt']
 
 for elem in new_files:
     df = pd.read_csv(elem, sep=' ')
@@ -29,17 +29,14 @@ for elem in new_files:
     #print(df_total)
     #df_total.columns = ['lat', 'long']
 # %%
-#Delete unnecessary data
-#df_total[df_total > -400].dropna()
-# Get names of indexes for which column Age has value 30
-indexNames = df_total[df_total['long'] < -400].index
-print(indexNames)
-# Delete these row indexes from dataFrame
-df_total.drop(index=indexNames)
+#Specify Nothern Hemisphere only
+df_total = df_total[df_total['long']>=-180]
+df_total = df_total[df_total['lat']>=0]
+
 # %%
 #df_total.plot(x = 'long', y='lat', kind='scatter')
 #df_total.plot(x = 'long', y='lat')
-plt.plot(df_total['long'],df_total['lat'],'.', markersize=0.2)
+plt.plot(df_total['long'],df_total['lat'],'.', markersize=0.1)
 plt.show()
 #plt.savefig('Q1_pt1.png')
 # %%
