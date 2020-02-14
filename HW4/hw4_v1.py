@@ -7,9 +7,10 @@ A=1
 c=1.5
 delta_t=1
 T_ref = 2
-t=1 #?
+t=0 #?
 
-m = t/delta_t
+#m = t/delta_t
+m=1
 #t=m*delta_t
 
 def slope(T,t):
@@ -25,14 +26,14 @@ print('Euler Forward: T at the following timestep is', T_n1)
 # %%
 #RK2
 T_star = T_ref + (delta_t/2)*slope(T_ref, t)
-T_n1_RK2 = T_ref + delta_t*slope(T_star,t)
+T_n1_RK2 = T_ref + delta_t*slope(T_star,t+delta_t/2)
 print('RK2: T at the following timestep is', T_n1_RK2)
 
 # %%
 #RK3
 T_star = T_ref + (delta_t/3)*slope(T_ref,t)
-T_2_star = T_ref + (delta_t/2)*slope(T_star,t)
-T_n1_RK3 = T_ref + delta_t*slope(T_2_star,t)
+T_2_star = T_ref + (delta_t/2)*slope(T_star,t+delta_t/3)
+T_n1_RK3 = T_ref + delta_t*slope(T_2_star,t+delta_t/2)
 print('RK3: T at the following timestep is', T_n1_RK3)
 
 # %%
@@ -46,7 +47,8 @@ print('RK4: T at the following timestep is', T_n1_RK4)
 
 # %%
 #Analytically
-T = A*(c*m*delta_t + T_ref -Tref_0)*(Tref_0-c*m*delta_t) 
+T_ref_3 = 3
+T = A*(c*m*delta_t + T_ref_3 -Tref_0)*(Tref_0-c*m*delta_t) 
 print('Analytically: T at the following timestep is', T)
 
 # %%
