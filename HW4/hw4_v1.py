@@ -58,7 +58,7 @@ print('RK2:', T_n1_RK2)
 print('RK3:', T_n1_RK3)
 print('RK4:', T_n1_RK4)
 print('Analytical:', T)
-print('We can see that RK4 was the method that gave the closest answer to the analytical solution')
+print('We can see that RK3 was the method that gave the closest answer to the analytical solution')
 
 
 # %%
