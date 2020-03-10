@@ -1,5 +1,8 @@
-# # %%
-# import numpy as np
+# %% [markdown]
+# ATSC 507 - HW4  
+# Rachel Steinhart  
+# February 24th, 2020  
+
 # %%
 #Question setup
 Tref_0=2
