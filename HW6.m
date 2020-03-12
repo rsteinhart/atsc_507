@@ -2,7 +2,7 @@ clear all
 close all
 %% Part A1
 % finding the maximum value of the denominator
-x = linspace(1,2*pi,360);
+x = linspace(0,2*pi,360);
 f = 8.*sin(x) - sin(2*x);
 [M, I] = max(f);
 
@@ -42,3 +42,14 @@ for j=1:length(Cr)
     legend(legendCell);
     title('Part A2')
 end
+
+%% Part B3
+I = 1/16;
+II = (sin(x).^2)/4;
+III = (sin(x).^4)/3;
+IV = (151/224).*(sin(x).^2);
+V = (89/56).*(sin(x).^4);
+VI = (16/14).*(sin(x).^6);
+
+f2 = sqrt((I+II+III)/(IV+V+VI));
+[M2, I2] = max(f2);
