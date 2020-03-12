@@ -56,22 +56,22 @@ plt.show()
 # j1[0:1001] = np.linspace(0,1000,1001)
 # j1 = j1.astype(int)
 
-nsteps = (imax-300)/(u*delt/delx)
-nsteps = int(nsteps)
-print(nsteps)
+
 # t = np.zeros(int(nsteps))
 # t[0:int(nsteps)] = np.linspace(1,int(nsteps)*delt,int(nsteps))
 # t = t[1:int(nsteps)]
 
 # Forward in time backward in space
-s = (nsteps, imax)
-Conc_ftbs = np.zeros(s)
-Conc_ftbs[0,:] = conc
+#s = (nsteps, imax)
+
 # for elem in t:
 #     n = elem
 #     for elem in j1[1:1001]:
 #         j = elem
 #         Conc_ftbs[j,n+1] = (delt/delx)*(Conc_ftbs[j,n]-Conc_ftbs[j-1,n]) + Conc_ftbs[j,n]
+nsteps = (imax-300)/(u*delt/delx)
+nsteps = int(nsteps)
+print(nsteps)
 
 t=[0]
 time = 0
@@ -80,18 +80,22 @@ while time < nsteps:
     t = np.append(t,time)
 #print(t)
 
-x1 = [0]
-distance = 0
+x1 = [1]
+distance = 1
 while distance < imax:
     distance = distance +1
     x1 = np.append(x1,distance)
-#print(x1)
+print(x1)
 
-for a in t:
-    for b in x1:
-        Conc_ftbs[a+1,b] = (delt/delx)*(Conc_ftbs[a,b]-Conc_ftbs[a,b-1]) + Conc_ftbs[a,b]
+s = (nsteps, imax)
+Conc_ftbs = np.zeros(s)
+Conc_ftbs[0,:] = conc
 
-Conc_ftbs_plt = Conc_ftbs[1400,:]
+for n in t:
+    for j in x1-1:
+        Conc_ftbs[n+1,j] = (delt/delx)*(Conc_ftbs[n,j]-Conc_ftbs[n,j-1]) + Conc_ftbs[n,j]
+
+Conc_ftbs_plt = Conc_ftbs[-1,:]
 plt.plot(x,Conc_ftbs_plt)
 plt.show()
 
