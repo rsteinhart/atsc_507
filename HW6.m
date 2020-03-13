@@ -43,13 +43,18 @@ for j=1:length(Cr)
     title('Part A2')
 end
 
-%% Part B3
+%% Part B3 WRONG
 I = 1/16;
 II = (sin(x).^2)/4;
 III = (sin(x).^4)/3;
 IV = (151/224).*(sin(x).^2);
 V = (89/56).*(sin(x).^4);
-VI = (16/14).*(sin(x).^6);
+VI = (16/576).*(sin(x).^6);
 
 f2 = sqrt((I+II+III)/(IV+V+VI));
 [M2, I2] = max(f2);
+
+%% Part B3 take 2
+
+f3 = sqrt(3./(sin(x).^2));
+[M3, I3] = min(f3);
