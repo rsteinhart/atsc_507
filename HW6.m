@@ -58,3 +58,22 @@ f2 = sqrt((I+II+III)/(IV+V+VI));
 
 f3 = sqrt(3./(sin(x).^2));
 [M3, I3] = min(f3);
+
+%% Part B5
+% Plot A(k) vs Cr (range 0-3) for various 
+% wavelengths: L = 2?x, 2.5?x, 3?x, 4?x, 5?x, 10?x, 20?x
+
+Cr = 0:3:0.5;
+delx =  1;
+m = [2, 2.5, 3, 4, 5, 10, 20];
+%L = [2*delx, 2.5*delx, 3*delx, 4*delx, 5*delx, 10*delx, 20*delx];
+
+A_matrix = zeros(length(m),length(Cr));
+for i = 1:length(m)
+    m = m(i);
+    L = m.*delx;
+    A = 1 - ((Cr.^4)/12).*(sin(k*delx))^4 + ((Cr.^6)/36).*(sin(k*delx))^6;
+    A_matrix(i,:) = A;
+end
+
+
