@@ -79,8 +79,27 @@ Conc_ftbs_plt = Conc_ftbs[-1,:]
 plt.plot(x,Conc_ftbs_plt)
 plt.show()
 
-
-
-
+# %%
+plt.plot(x,Conc_ftbs_plt,'g')
+plt.plot(x,cideal, 'r')
+plt.plot(x, conc, 'b')
+plt.legend('initial','ideal')
+plt.show()
 
 # %%
+# 5) Repeat steps (2-4) to re-initialize, but plotting 
+# (in green) on a new graph, and using
+# RK3 for the advection.  Use same number of time steps.
+
+def RK3(Tref,delta_t):
+    T_star = T_ref + (delta_t/3)*slope(T_ref,t)
+    T_2_star = T_ref + (delta_t/2)*slope(T_star,t+delta_t/3)
+    T_n1_RK3 = T_ref + delta_t*slope(T_2_star,t+delta_t/2)
+    print('RK3: T at the following timestep is', T_n1_RK3)
+    return(T_n1_RK3)
+
+# for n in t:
+#     for j in x1-1:
+#         Conc_RK3 = RK3(conc[n,j],delt)
+
+
