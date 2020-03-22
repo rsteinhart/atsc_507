@@ -49,9 +49,6 @@ disp(print_val)
 Cr_b = 0:0.5:3;
 delx =  1;
 m = [2, 2.5, 3, 4, 5, 10, 20];
-% m_arr = zeros(1,7);
-% m_arr(:) = m;
-
 
 A_matrix = zeros(length(m),length(Cr_b));
 for i = 1:length(m)
@@ -59,12 +56,10 @@ for i = 1:length(m)
     L = k.*delx;
     A = 1 - ((Cr_b.^4)/12).*(sin(k*delx))^4 + ((Cr_b.^6)/36).*(sin(k*delx))^6;
     A_matrix(i,:) = A;
-end
-
-hold on
-figure(2)
-for k = 1:length(m)
-    plot(Cr_b,A_matrix(k,:))
+    
+    hold on
+    figure(2)
+    plot(Cr_b,A_matrix(i,:))
     xlabel('Cr');
     ylabel('A');
     legend('2', '2.5', '3', '4', '5', '10', '20');
