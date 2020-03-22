@@ -91,9 +91,12 @@ plt.show()
 # 5) Repeat steps (2-4) to re-initialize, but plotting 
 # (in green) on a new graph, and using
 # RK3 for the advection.  Use same number of time steps.
-def slope(C_ref,C_ref_1,x):
-    delC_delx = (C_ref_1-C_ref)/dx
-    return(delC_delx)
+
+##################################           OLD         #############################
+
+# def slope(C_ref,C_ref_1,x):
+#     delC_delx = (C_ref_1-C_ref)/dx
+#     return(delC_delx)
 
 # def RK3(Tref,delta_t):
 #     T_star = T_ref + (delta_t/3)*slope(T_ref,t)
@@ -101,14 +104,56 @@ def slope(C_ref,C_ref_1,x):
 #     T_n1_RK3 = T_ref + delta_t*slope(T_2_star,t+delta_t/2)
 #     print('RK3: T at the following timestep is', T_n1_RK3)
 #     return(T_n1_RK3)
-dx = 1
+# dx = 1
 
-for n in t:
-    for j in x1-1:
-        slope = slope(conc[n,j],conc[n,j+1],dx)
-        conc_star = conc[n,j] + (delt/3)*slope(conc[n,j],conc[n,j+1],dx)
-        conc_2_star = conc[n,j] + (delt,2)*slope(conc_star,conc[n,j+1],dx)
-        conc_n1 = 
-        
+# for n in t:
+#     for j in x1-1:
+#         slope = slope(conc[n,j],conc[n,j+1],dx)
+#         conc_star = conc[n,j] + (delt/3)*slope(conc[n,j],conc[n,j+1],dx)
+#         conc_2_star = conc[n,j] + (delt,2)*slope(conc_star,conc[n,j+1],dx)
+#         conc_n1 = 
 
+#####################################################################################
+
+#T_tendency_j = – (1/2) * Cr * [T(j+1) - T(j) ] + (Cr*Cr/8) * [ T(j+2) - 2 T(j) + T(j-2) ] - (Cr*Cr*Cr/48) * [ T(j+3) - 3T(j+1) + 3T(j-1) - T(j-3) ]
+conc_j_n = np.zeros(s)
+term1 = np.zeros(s)
+term2 = np.zeros(s)
+term3 = np.zeros(s)
+conc_tendency_j = np.zeros(s)
+
+conc_j_n[0,:] = conc
+
+t5=[1]
+time5 = 1
+while time5 < nsteps-2:
+    time5 = time5+1
+    t5 = np.append(t5,time5)
+print(t5)
+
+x5 = [4]
+distance5 = 4
+while distance5 < imax-1:
+    distance5 = distance5 +1
+    x5 = np.append(x5,distance5)
+print(x5)
+
+for n in t5:
+    for j in x5-3:
+        term1[n,j] = -1*(1/2)*Cr*(conc_j_n[n,j+1] - conc_j_n[n,j])
+        term2[n,j] = (Cr*Cr/8)*(conc_j_n[n,j+2] -2*conc_j_n[n,j] + conc_j_n[n,j-2])
+        term3[n,j] = (Cr*Cr*Cr/48)*(conc_j_n[n,j+3] - 3*conc_j_n[n,j+1] + 3*conc_j_n[n,j-1] - conc_j_n[n,j-3])
+
+        conc_tendency_j[n,j] = term1[n,j] + term2[n,j] + term3[n,j]
+        conc_j_n[n,j+1] = conc_j_n[n,j] + conc_tendency_j[n,j]
+
+# %%
+conc_j_n_plt = conc_j_n[-1,:]
+plt.plot(x,conc_j_n_plt)
+plt.show()
+
+# %%
+print(conc_j_n[0,:])
+print(conc)
+print(t)
 
