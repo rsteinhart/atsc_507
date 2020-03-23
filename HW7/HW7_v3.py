@@ -1,3 +1,8 @@
+# %% [markdown]
+# Rachel Steinhart  
+# ATSC 507 - HW7 - Dr. Roland Stull  
+# March 23rd, 2020
+
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
@@ -39,7 +44,9 @@ cideal[740:760] = np.linspace(-0.5*cmax,0,20)
 # Plot
 plt.plot(x,cideal, 'r')
 plt.plot(x, conc, 'b')
-plt.legend('initial','ideal')
+plt.title('Part 3) Initial and Ideal concentrations')
+plt.xlabel('Grid index (i)')
+plt.ylabel('Concentration')
 plt.show()
 
 # %%
@@ -48,21 +55,18 @@ plt.show()
 
 nsteps = (imax-300)/(u*delt/delx)
 nsteps = int(nsteps)
-print(nsteps)
 
 t=[0]
 time = 0
 while time < nsteps-2:
     time = time+1
     t = np.append(t,time)
-print(t)
 
 x1 = [1]
 distance = 1
 while distance < imax-1:
     distance = distance +1
     x1 = np.append(x1,distance)
-print(x1)
 
 s = (nsteps, imax)
 Conc_ftbs = np.zeros(s)
@@ -73,15 +77,14 @@ for n in t:
         Conc_ftbs[n+1,j] = -Cr*(Conc_ftbs[n,j]-Conc_ftbs[n,j-1]) + Conc_ftbs[n,j]
 
 Conc_ftbs_plt = Conc_ftbs[-1,:]
-plt.plot(x,Conc_ftbs_plt)
-plt.show()
 
 # %%
 plt.plot(x,Conc_ftbs_plt,'g')
 plt.plot(x,cideal, 'r')
 plt.plot(x, conc, 'b')
-plt.legend('initial','ideal')
-plt.title('Final plot for part 4')
+plt.title('Part 4) FTBS')
+plt.xlabel('Grid index (i)')
+plt.ylabel('Concentration')
 plt.show()
 
 # %%
@@ -122,7 +125,16 @@ for n in t5:
 
 # %%
 conc_rk3_plt = conc_rk3[-1,:]
+plt.plot(x,cideal, 'r')
+plt.plot(x, conc, 'b')
 plt.plot(x,conc_rk3_plt,'g')
+plt.title('Part 5) RK3')
+plt.xlabel('Grid index (i)')
+plt.ylabel('Concentration')
 plt.show()
+
+# %% [markdown]
+# 7)
+# The forward in time backward in space (FTSB) technique produces wider and shorter curves than the ideal solution. The transitions in concentration are also more smooth than in the ideal solution and the peaks were centered with the ideal solution. The 3rd order runga kutta (RK3) method (with second order in space) produced final concentrations with peaks that matched the ideal solution more closely than the FTSB but a small "worm" was developped. The peaks were also slightly off center from the ideal solution. Finally, the PPM scheme produced peaks that matched the ideal solution exactly. Proving that this scheme, although more computationally intensive, was most accurate for this exercise.
 
 # %%
