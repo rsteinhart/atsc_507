@@ -124,19 +124,19 @@ conc_tendency_j = np.zeros(s)
 
 conc_j_n[0,:] = conc
 
-t5=[1]
-time5 = 1
+t5=[0]
+time5 = 0
 while time5 < nsteps-2:
     time5 = time5+1
     t5 = np.append(t5,time5)
-print(t5)
+#print(t5)
 
-x5 = [4]
-distance5 = 4
+x5 = [3]
+distance5 = 3
 while distance5 < imax-1:
     distance5 = distance5 +1
     x5 = np.append(x5,distance5)
-print(x5)
+#print(x5)
 
 for n in t5:
     for j in x5-3:
@@ -145,7 +145,8 @@ for n in t5:
         term3[n,j] = (Cr*Cr*Cr/48)*(conc_j_n[n,j+3] - 3*conc_j_n[n,j+1] + 3*conc_j_n[n,j-1] - conc_j_n[n,j-3])
 
         conc_tendency_j[n,j] = term1[n,j] + term2[n,j] + term3[n,j]
-        conc_j_n[n,j+1] = conc_j_n[n,j] + conc_tendency_j[n,j]
+        
+        conc_j_n[n+1,j] = conc_j_n[n,j] + conc_tendency_j[n,j]
 
 # %%
 conc_j_n_plt = conc_j_n[-1,:]
@@ -154,6 +155,6 @@ plt.show()
 
 # %%
 print(conc_j_n[0,:])
-print(conc)
-print(t)
+# print(conc)
+# print(t)
 
