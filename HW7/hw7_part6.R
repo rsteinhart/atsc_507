@@ -16,6 +16,7 @@ conc[100:150] <- seq(0., cmax, len = 51)        # insert left side of triangle
 conc[150:200] <- seq(cmax, 0., len = 51)        # insert right side of triangle
 conc[20:40] <- seq(0., -0.5*cmax, len = 21)    # insert left side of triangle
 conc[40:60] <- seq(-0.5*cmax, 0., len = 21)    # insert right side of triangle
+conc_i = conc
 
 cideal <- rep(0.0, imax)   # initial concentration of ideal background is zero
 cideal[800:850] <- seq(0., cmax, len = 51)    # insert left side of triangle
@@ -147,4 +148,8 @@ for (n in 1:nsteps) {                   # for each time step n
     }                                   # end of loop over all interior grid cells i
     
 }                                       # end of loop over all time iterations n
-plot(y,conc)
+
+x_ax = seq(from = 1, to = 1000, by = 1)
+plot(x_ax,cideal, col="blue")
+lines(x_ax, conc_i, col="red")
+lines(x_ax,conc,col="green")
