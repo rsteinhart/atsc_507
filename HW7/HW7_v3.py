@@ -92,37 +92,13 @@ plt.show()
 # (in green) on a new graph, and using
 # RK3 for the advection.  Use same number of time steps.
 
-##################################           OLD         #############################
-
-# def slope(C_ref,C_ref_1,x):
-#     delC_delx = (C_ref_1-C_ref)/dx
-#     return(delC_delx)
-
-# def RK3(Tref,delta_t):
-#     T_star = T_ref + (delta_t/3)*slope(T_ref,t)
-#     T_2_star = T_ref + (delta_t/2)*slope(T_star,t+delta_t/3)
-#     T_n1_RK3 = T_ref + delta_t*slope(T_2_star,t+delta_t/2)
-#     print('RK3: T at the following timestep is', T_n1_RK3)
-#     return(T_n1_RK3)
-# dx = 1
-
-# for n in t:
-#     for j in x1-1:
-#         slope = slope(conc[n,j],conc[n,j+1],dx)
-#         conc_star = conc[n,j] + (delt/3)*slope(conc[n,j],conc[n,j+1],dx)
-#         conc_2_star = conc[n,j] + (delt,2)*slope(conc_star,conc[n,j+1],dx)
-#         conc_n1 = 
-
-#####################################################################################
-
-#T_tendency_j = – (1/2) * Cr * [T(j+1) - T(j) ] + (Cr*Cr/8) * [ T(j+2) - 2 T(j) + T(j-2) ] - (Cr*Cr*Cr/48) * [ T(j+3) - 3T(j+1) + 3T(j-1) - T(j-3) ]
-conc_j_n = np.zeros(s)
+conc_rk3 = np.zeros(s)
 term1 = np.zeros(s)
 term2 = np.zeros(s)
 term3 = np.zeros(s)
-conc_tendency_j = np.zeros(s)
+term4 = np.zeros(s)
 
-conc_j_n[0,:] = conc
+conc_rk3[0,:] = conc
 
 t5=[0]
 time5 = 0
@@ -140,21 +116,18 @@ while distance5 < imax-1:
 
 for n in t5:
     for j in x5-3:
-        term1[n,j] = -1*(1/2)*Cr*(conc_j_n[n,j+1] - conc_j_n[n,j])
-        term2[n,j] = ((Cr**2)/8)*(conc_j_n[n,j+2] -2*conc_j_n[n,j] + conc_j_n[n,j-2])
-        term3[n,j] = ((Cr**3)/48)*(conc_j_n[n,j+3] - 3*conc_j_n[n,j+1] + 3*conc_j_n[n,j-1] - conc_j_n[n,j-3])
+        term1 = (1-Cr*Cr/4)*conc_rk3[n,j]
+        term2 = ((Cr/2)-3*(Cr*Cr*Cr/48))*(conc_rk3[n,j+1]-conc_rk3[n,j-1])
+        term3 = (Cr*Cr/8)*(conc_rk3[n,j+2]+conc_rk3[n,j-2])
+        term4 = (Cr*Cr*Cr/48)*(conc_rk3[n,j+3]-conc_rk3[n,j-3])
 
-        conc_tendency_j[n,j] = term1[n,j] + term2[n,j] + term3[n,j]
-        
-        conc_j_n[n+1,j] = conc_j_n[n,j] + conc_tendency_j[n,j]
+        conc_rk3[n+1,j] = term1 - term2 + term3 - term4
 
 # %%
-conc_j_n_plt = conc_j_n[-1,:]
-plt.plot(x,conc_j_n_plt)
+conc_rk3_plt = conc_rk3[-1,:]
+plt.plot(x,conc_rk3_plt,'g')
 plt.show()
 
 # %%
-# print(conc_j_n[0,:])
-# print(conc)
-# print(t)
+
 
