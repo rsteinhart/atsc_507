@@ -12,20 +12,21 @@ disp(print_val)
 %% Part A2
 Cr = 0:0.73/15:0.73; %calculate 
 legendCell = cellstr(num2str(Cr', 'N=%-d')); % convert values to make legend
+% extra entries ignored, only ones lining up with Cr values used
 
 m = [2, 2.5, 3, 4, 8, 16];
-A_matrix = zeros(length(Cr),length(m));
+A_matrix1 = zeros(length(Cr),length(m));
 
 % Calculate A for each Cr and add to matrix
 for i = 1:length(Cr)
     A = sqrt((-(Cr(i)^2)/36).*(8.*sin(2*pi./m) - sin(2*2*pi./m)).^2 + 1);
-    A_matrix(i,:) = A; 
+    A_matrix1(i,:) = A; 
 end
 
 hold on
 figure(1)
 for j=1:length(Cr)
-    plot(m,A_matrix(j,:))
+    plot(m,A_matrix1(j,:))
     xlabel('m');
     ylabel('A');
     legend(legendCell);
