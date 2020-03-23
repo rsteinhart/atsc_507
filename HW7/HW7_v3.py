@@ -68,9 +68,6 @@ s = (nsteps, imax)
 Conc_ftbs = np.zeros(s)
 Conc_ftbs[0,:] = conc
 
-# for n in t:
-#     for j in x1:
-#         Conc_ftbs[n+1,j] = (delt/delx)*(Conc_ftbs[n,j]-Conc_ftbs[n,j-1]) + Conc_ftbs[n,j]
 for n in t:
     for j in x1-1:
         Conc_ftbs[n+1,j] = -Cr*(Conc_ftbs[n,j]-Conc_ftbs[n,j-1]) + Conc_ftbs[n,j]
@@ -129,5 +126,3 @@ plt.plot(x,conc_rk3_plt,'g')
 plt.show()
 
 # %%
-
-
