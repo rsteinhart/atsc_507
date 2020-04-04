@@ -24,6 +24,12 @@ plt.show()
 # 1b) Integrate
 x_int = np.linspace(0,20,20000)
 y_int = func_y(x_int)
+delx = 20/20000
+
+I = 0
+for i in range (20000):
+    I = delx*y_int[i] + I
+print('Part 1b) I=',I)
 
 # %%
 # 1b) Plot
@@ -40,12 +46,15 @@ plt.show()
 n_i = 2
 Gammak_i = 0.5773502692
 wk_i = 1
+a = 0 #?
+b = pi/2 #?
 
-xk = (b+a)/2 + ((b-a)/2)*Gammak
+xk_i = [(b+a)/2 + ((b-a)/2)*Gammak_i,(b+a)/2 + ((b-a)/2)*(-1)*Gammak_i]
 sum_m = 0
 
-for i = 1:n:
-    sum_m = wk*func_y(xk) + sum_m
+for i in range(n_i):
+    sum_m = wk_i*func_y(xk_i[i]) + sum_m
 
 integral_ab = ((b-a)/2)*sum_m
+print('Part 1ci) I = ',integral_ab)
 
