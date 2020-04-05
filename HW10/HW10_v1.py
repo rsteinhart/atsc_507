@@ -63,28 +63,43 @@ print('Part 1ci) I = ',integral_ab)
 
 # i) n = 2
 n = [2,4,6,8]
+n = np.array(n)
 Gammak_i = [[0.5773502692],
             [0.3399810436, 0.8611363116],
             [0.2386191861,0.6612093865,0.9324695142],
             [0.1834346425,0.5255324099, 0.7966664774, 0.9602898565]]
 
+Gammak_i = np.array(Gammak_i)
+
 wk_i = [[1],
         [0.6521451549, 0.3478548451],
         [0.4679139346, 0.3607615730, 0.1713244924],
         [0.3626837834, 0.3137066459, 0.2223810345, 0.1012285362]]
+wk_i = np.array(wk_i)
 
 a = 0 #?
 b = pi/2 #?
 
 
 sum_m = 0
+xk = np.zeros((len(n),n[-1]))
 
-for i in range(length(n)):
-    for j in range(n(i)/2):
-        xk[i,j] = [(b+a)/2 + ((b-a)/2)*Gammak_i[i,j],(b+a)/2 + ((b-a)/2)*(-1)*Gammak_i[i,j]]
+#j is looping through the maximum amount of spots which doesnt work for
+# every row 
 
-for i in range(length(n)):
-    for j in range(n(i)/2):        
+# NEEDS FIXING
+
+for i in range(int(len(n))-1):
+    for j in range(int(n[-1])-1):
+        if j == 0 or j==2 or j==4 or j==6:
+            xk[i,j] = (b+a)/2 + ((b-a)/2)*(Gammak_i[i,j])
+        elif j == 1 or j==3 or j==5 or j==7:
+            xk[i,j] = (b+a)/2 + ((b-a)/2)*(-1)*Gammak_i[i,j]
+
+print(xk)
+
+for i in range(len(n)):
+    for j in range(int(n[i]/2)):
         sum_m = wk_i*func_y(xk[i,j]) + sum_m
         
 
