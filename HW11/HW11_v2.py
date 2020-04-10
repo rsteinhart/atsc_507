@@ -2,26 +2,11 @@
 import numpy as np
 # %% 
 # A19
-# F = [[5.3, 5.4, 5.5, 5.4],
-#     [5.5, 5.4, 5.5, 5.6],
-#     [5.6, 5.6, 5.6, 5.6],
-#     [5.8, 5.7, 5.6, 5.7],
-#     [5.9, 5.8, 5.7, 5.8]]
-
-# F = np.matrix(F)
-
 F = [5.3, 5.4, 5.5, 5.4, 5.5, 5.4, 5.5, 5.6, 5.6, 5.6, 5.6, 5.6, 5.8, 5.7, 5.6, 5.7, 5.9, 5.8, 5.7, 5.8]
 F = np.array(F)
 
-# V = [[5.3, 5.3, 5.3, 5.4],
-#      [5.4, 5.3, 5.4, 5.5],
-#      [5.5, 5.4, 5.5, 5.5], 
-#      [5.7, 5.5, 5.6, 5.6],
-#      [5.8, 5.7, 5.6, 5.6]]
-
 V = [5.3, 5.3, 5.3, 5.4, 5.4, 5.3, 5.4, 5.5, 5.5, 5.4, 5.5, 5.5, 5.7, 5.5, 5.6, 5.6, 5.8, 5.7, 5.6, 5.6]
 V = np.array(V)
-# V = np.matrix(V)
 
 A = [5.2,5.3,5.4,5.3,5.3,5.4,5.5,5.4,5.4,5.5,5.6,5.5,5.5,5.6,5.7,5.6,5.6,5.7,5.8,5.7]
 A = np.array(A)
@@ -78,7 +63,7 @@ V_prime = V - V_ave
 fv_prime = F_prime*V_prime
 fv_ave = (fv_prime.sum(axis=0,dtype='float'))/len(fv_prime)
 
-rc = (fv_ave)/(np.sqrt(F_prime**2)*np.sqrt(V_prime**2))
+rc = (fv_ave)/(np.sqrt((F_prime**2).sum(axis=0,dtype='float')/len(F))*np.sqrt((V_prime**2)).sum(axis=0,dtype='float')/len(F))
 print('The correlation coefficient is', rc)
 
 # %%
@@ -93,8 +78,16 @@ denominator = np.sqrt((term3*term4).sum(axis=0,dtype='float')/len(F))
 FAC = numerator/denominator
 print('The forecast anomoly correlation is', FAC)
 
-
+# %%
 # j) persistence anomaly correlation
+term1 = (A-C)-((A-C).sum(axis=0,dtype='float')/len(F))
+term2 = (V-C)-((V-C).sum(axis=0,dtype='float')/len(V))
+term3 = term1**2
+term4 = term2**2
+numerator = (term1*term2).sum(axis=0,dtype='float')/len(F)
+denominator = np.sqrt((term3*term4).sum(axis=0,dtype='float')/len(F))
 
+PAC = numerator/denominator
+print('The persistance anomoly correlation is', PAC)
 
 # k) draw height contours by hand 
