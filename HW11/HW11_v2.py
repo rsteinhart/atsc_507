@@ -91,3 +91,60 @@ PAC = numerator/denominator
 print('The persistance anomoly correlation is', PAC)
 
 # k) draw height contours by hand 
+# ????????????
+# ????????????
+# ????????????
+# ????????????
+# ????????????
+# ????????????
+# ????????????
+
+# %%
+# A20
+a = 150
+b = 65
+c = 50
+d = 100
+n = 365
+
+B = (a+b)/(a+c)
+print('The bias score is', B)
+PC = (a+b)/n
+print('The portion correct is', PC)
+E = ((a+b)/n)*((a+c)/n) + ((d+b)/n)*((d+c)/n)
+print('The random luck ratio is', E)
+HSS = (PC-E)/(1-E)
+print('The Heidke skill score is', HSS)
+H = a/(a+c)
+print('The hit rate is', H)
+F = b/(b+d)
+print('The false alarm rate is',F)
+FAR = b/(a+b)
+print('The false-alarm ratio', FAR)
+TSS = H-F
+print('The true skill score is', TSS)
+CSI = a/(a+b+c)
+print('The critical success index is',CSI)
+ar = ((a+b)*(a+c)/n)
+print('The portion of random hits is',ar)
+GSS = (a-ar)/(a-ar+b+c)
+print('The Gilberts skill score is',GSS)
+
+# %%
+# A21
+cost = 5 #thousand dollars
+loss = 50 #thousand dollars
+o = 0.5
+
+E_climate = np.min(cost,o*loss)
+E_fcst = a*coss/n + b*cost/n + c*loss/n
+E_perfect = o*Cost
+
+V = (E_climate-E_fcst)/(E_climate-E_perfect)
+print('The forecast value is', V)
+
+# %%
+# A22
+k = np.linspace(0,20,21)
+pk = [0.9,0.85,0.8,0.75,0.7,0.65,0.6,0.55,0.5,0.45,0.4,0.35,0.3,0.25,0.2,0.15,0.1,0.05,0.02,0]
+ok = [1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,1,0,0,0,0]
