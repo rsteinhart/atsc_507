@@ -146,5 +146,26 @@ print('The forecast value is', V)
 # %%
 # A22
 k = np.linspace(0,20,21)
+k = np.array(k)
 pk = [0.9,0.85,0.8,0.75,0.7,0.65,0.6,0.55,0.5,0.45,0.4,0.35,0.3,0.25,0.2,0.15,0.1,0.05,0.02,0]
+pk = np.array(pk)
 ok = [1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,1,0,0,0,0]
+ok = np.array(ok)
+
+# Brier Skill Score
+num = ((pk-ok)**2).sum(axis=0,dtype='float')
+den_1 = ok.sum(axis=0,dtype='float')
+den_2 = len(k)- den_1
+
+BSS = 1 - num/(den_1*den_2)
+
+# Probability bins of width delp=0.2
+delp=0.2
+pj = np.array([0.2,0.4,0.6,0.8,1.0])
+j = np.array([0,1,2,3,4,5])
+
+#??
+
+# Relative reliability 
+num = (((nj*pj)-noj)**2).sum(axis=0,dtype='float')
+BSS_reliability = 
