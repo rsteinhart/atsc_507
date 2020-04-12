@@ -1,5 +1,6 @@
 # %%
 import numpy as np
+import matplotlib.pyplot as plt
 # %% 
 # A19
 F = [5.3, 5.4, 5.5, 5.4, 5.5, 5.4, 5.5, 5.6, 5.6, 5.6, 5.6, 5.6, 5.8, 5.7, 5.6, 5.7, 5.9, 5.8, 5.7, 5.8]
@@ -125,7 +126,7 @@ TSS = H-F
 print('The true skill score is', TSS)
 CSI = a/(a+b+c)
 print('The critical success index is',CSI)
-ar = ((a+b)*(a+c)/n)
+ar = (((a+b)*(a+c))/n)
 print('The portion of random hits is',ar)
 GSS = (a-ar)/(a-ar+b+c)
 print('The Gilberts skill score is',GSS)
@@ -136,9 +137,9 @@ cost = 5 #thousand dollars
 loss = 50 #thousand dollars
 o = 0.5
 
-E_climate = np.min(cost,o*loss)
-E_fcst = a*coss/n + b*cost/n + c*loss/n
-E_perfect = o*Cost
+E_climate = np.minimum(cost,o*loss)
+E_fcst = a*cost/n + b*cost/n + c*loss/n
+E_perfect = o*cost
 
 V = (E_climate-E_fcst)/(E_climate-E_perfect)
 print('The forecast value is', V)
@@ -158,14 +159,32 @@ den_1 = ok.sum(axis=0,dtype='float')
 den_2 = len(k)- den_1
 
 BSS = 1 - num/(den_1*den_2)
+print('The Brier Skill Score is', BSS)
 
 # Probability bins of width delp=0.2
 delp=0.2
 pj = np.array([0.2,0.4,0.6,0.8,1.0])
 j = np.array([0,1,2,3,4,5])
+nj = np.array([4,4,4,4,4])
+noj = np.array([3,3,1,2,0])
+ratio = noj/nj
 
-#??
-
+plt.plot(pj,ratio)
+plt.show()
 # Relative reliability 
 num = (((nj*pj)-noj)**2).sum(axis=0,dtype='float')
-BSS_reliability = 
+
+BSS_reliability = num/(den_1*den_2)
+print('The Reliability Brier Skill Score is', BSS_reliability)
+
+# %%
+# A23
+# 10-member ensemble forecast, probabilites that 24h acc precip >5mm
+# calc hit rate, false alarm rate for the full range of 
+# allowed probability theshold and plot the result as a ROC diagram 
+# find the area under the ROC curve and find the ROC skill score
+day = np.array(np.linspace(1,30,30))
+o = np.array([1,0,1,1,0,0,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,0,1,0,1])
+p = np.array([50,20,20,60,50,20,30,90,40,30,100,10,0,10,80,60,70,90,80,70,10,10,0,0,80,0,0,100,10,90])
+a = 
+b = 
