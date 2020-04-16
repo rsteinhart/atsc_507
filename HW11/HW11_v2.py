@@ -186,5 +186,214 @@ print('The Reliability Brier Skill Score is', BSS_reliability)
 day = np.array(np.linspace(1,30,30))
 o = np.array([1,0,1,1,0,0,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,0,1,0,1])
 p = np.array([50,20,20,60,50,20,30,90,40,30,100,10,0,10,80,60,70,90,80,70,10,10,0,0,80,0,0,100,10,90])
-a = 
-b = 
+zero = np.array([1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,1,0,0,1,1,1])
+ten = np.array([1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,1,0,0,1,1,1])
+twenty = np.array([1,0,0,1,1,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
+thirty = np.array([1,0,0,1,1,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
+fourty = np.array([1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
+fifty = np.array([1,0,0,1,1,0,0,1,0,0,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
+sixty = np.array([0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
+seventy = np.array([0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
+eighty = np.array([0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,1,0,1])
+ninety = np.array([0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1])
+hundred = np.array([0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0])
+
+a0 = np.zeros(len(day))
+b0 = np.zeros(len(day))
+c0 = np.zeros(len(day))
+d0 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and zero[i]==1:
+        a0[i]=1
+    if o[i]==0 and zero[i]==1:
+        b0[i]=1
+    if o[i]==1 and zero[i]==0:
+        c0[i]=1
+    if o[i]==0 and zero[i]==0:
+        d0[i]=1
+
+a10 = np.zeros(len(day))
+b10 = np.zeros(len(day))
+c10 = np.zeros(len(day))
+d10 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and ten[i]==1:
+        a10[i]=1
+    if o[i]==0 and ten[i]==1:
+        b10[i]=1
+    if o[i]==1 and ten[i]==0:
+        c10[i]=1
+    if o[i]==0 and ten[i]==0:
+        d10[i]=1
+
+a20 = np.zeros(len(day))
+b20 = np.zeros(len(day))
+c20 = np.zeros(len(day))
+d20 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and twenty[i]==1:
+        a20[i]=1
+    if o[i]==0 and twenty[i]==1:
+        b20[i]=1
+    if o[i]==1 and twenty[i]==0:
+        c20[i]=1
+    if o[i]==0 and twenty[i]==0:
+        d20[i]=1
+
+a30 = np.zeros(len(day))
+b30 = np.zeros(len(day))
+c30 = np.zeros(len(day))
+d30 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and thirty[i]==1:
+        a30[i]=1
+    if o[i]==0 and thirty[i]==1:
+        b30[i]=1
+    if o[i]==1 and thirty[i]==0:
+        c30[i]=1
+    if o[i]==0 and thirty[i]==0:
+        d30[i]=1
+
+a40 = np.zeros(len(day))
+b40 = np.zeros(len(day))
+c40 = np.zeros(len(day))
+d40 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and fourty[i]==1:
+        a40[i]=1
+    if o[i]==0 and fourty[i]==1:
+        b40[i]=1
+    if o[i]==1 and fourty[i]==0:
+        c40[i]=1
+    if o[i]==0 and fourty[i]==0:
+        d40[i]=1
+
+a50 = np.zeros(len(day))
+b50 = np.zeros(len(day))
+c50 = np.zeros(len(day))
+d50 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and fifty[i]==1:
+        a50[i]=1
+    if o[i]==0 and fifty[i]==1:
+        b50[i]=1
+    if o[i]==1 and fifty[i]==0:
+        c50[i]=1
+    if o[i]==0 and fifty[i]==0:
+        d50[i]=1
+
+a60 = np.zeros(len(day))
+b60 = np.zeros(len(day))
+c60 = np.zeros(len(day))
+d60 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and sixty[i]==1:
+        a60[i]=1
+    if o[i]==0 and sixty[i]==1:
+        b60[i]=1
+    if o[i]==1 and sixty[i]==0:
+        c60[i]=1
+    if o[i]==0 and sixty[i]==0:
+        d60[i]=1
+
+a70 = np.zeros(len(day))
+b70 = np.zeros(len(day))
+c70 = np.zeros(len(day))
+d70 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and seventy[i]==1:
+        a70[i]=1
+    if o[i]==0 and seventy[i]==1:
+        b70[i]=1
+    if o[i]==1 and seventy[i]==0:
+        c70[i]=1
+    if o[i]==0 and seventy[i]==0:
+        d70[i]=1
+
+a80 = np.zeros(len(day))
+b80 = np.zeros(len(day))
+c80 = np.zeros(len(day))
+d80 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and eighty[i]==1:
+        a80[i]=1
+    if o[i]==0 and eighty[i]==1:
+        b80[i]=1
+    if o[i]==1 and eighty[i]==0:
+        c80[i]=1
+    if o[i]==0 and eighty[i]==0:
+        d80[i]=1
+
+a90 = np.zeros(len(day))
+b90 = np.zeros(len(day))
+c90 = np.zeros(len(day))
+d90 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and ninety[i]==1:
+        a90[i]=1
+    if o[i]==0 and ninety[i]==1:
+        b90[i]=1
+    if o[i]==1 and ninety[i]==0:
+        c90[i]=1
+    if o[i]==0 and ninety[i]==0:
+        d90[i]=1
+
+a100 = np.zeros(len(day))
+b100 = np.zeros(len(day))
+c100 = np.zeros(len(day))
+d100 = np.zeros(len(day))
+
+for i in range(len(day)):
+    if o[i]==1 and hundred[i]==1:
+        a100[i]=1
+    if o[i]==0 and hundred[i]==1:
+        b100[i]=1
+    if o[i]==1 and hundred[i]==0:
+        c100[i]=1
+    if o[i]==0 and hundred[i]==0:
+        d100[i]=1
+
+# a = np.zeros(len(day))
+# b = np.zeros(len(day))
+# c = np.zeros(len(day))
+# d = np.zeros(len(day))
+
+hit_rate = np.zeros(11)
+false_alarm = np.zeros(11)
+
+a = np.array([np.sum(a0), np.sum(a10), np.sum(a20), np.sum(a30), np.sum(a40), np.sum(a50), np.sum(a60), np.sum(a70), np.sum(a80), np.sum(a90), np.sum(a100)])
+b = np.array([np.sum(b0), np.sum(b10), np.sum(b20), np.sum(b30), np.sum(b40), np.sum(b50), np.sum(b60), np.sum(b70), np.sum(b80), np.sum(b90), np.sum(b100)])
+c = np.array([np.sum(c0), np.sum(c10), np.sum(c20), np.sum(c30), np.sum(c40), np.sum(c50), np.sum(c60), np.sum(c70), np.sum(c80), np.sum(c90), np.sum(c100)])
+d = np.array([np.sum(d0), np.sum(d10), np.sum(d20), np.sum(d30), np.sum(d40), np.sum(d50), np.sum(d60), np.sum(d70), np.sum(d80), np.sum(d90), np.sum(d100)])
+
+
+for i in range(11):
+    hit_rate[i] = a[i]/(a[i]+c[i])
+    false_alarm[i] = b[i]/(b[i]+d[i])
+
+hit_rate = np.nan_to_num(hit_rate)
+false_alarm = np.nan_to_num(false_alarm)
+
+print(hit_rate)
+print(false_alarm)
+
+plt.plot(false_alarm,hit_rate)
+plt.title('ROC plot')
+plt.xlabel('False Alarm Rate')
+plt.ylabel('Hit Rate')
+
+# for i in range(len(hit_rate)):
+#     Area = (hit_rate[i])*(false_alarm[i]-false_alarm[i-1])
+
+Area = -1*np.trapz(hit_rate,false_alarm)
+print(Area)
