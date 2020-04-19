@@ -94,13 +94,7 @@ PAC = numerator/denominator
 print('The persistance anomoly correlation is', PAC)
 
 # k) draw height contours by hand 
-# ????????????
-# ????????????
-# ????????????
-# ????????????
-# ????????????
-# ????????????
-# ????????????
+# attached
 
 # %%
 # A20
@@ -365,11 +359,6 @@ for i in range(len(day)):
     if o[i]==0 and hundred[i]==0:
         d100[i]=1
 
-# a = np.zeros(len(day))
-# b = np.zeros(len(day))
-# c = np.zeros(len(day))
-# d = np.zeros(len(day))
-
 hit_rate = np.zeros(11)
 false_alarm = np.zeros(11)
 
@@ -389,11 +378,8 @@ false_alarm = np.nan_to_num(false_alarm)
 false_alarm = np.array(np.sort(false_alarm))
 
 
-print(hit_rate)
-print(false_alarm)
-
-# xnew = np.linspace(false_alarm.min(), false_alarm.max(), 300)  
-# power_smooth = make_interp_spline(false_alarm, hit_rate)
+print('Hit rate =',hit_rate)
+print('False alarm rate = ',false_alarm)
 
 plt.plot(false_alarm,hit_rate,'o')
 plt.title('ROC plot')
@@ -401,15 +387,6 @@ plt.xlabel('False Alarm Rate')
 plt.ylabel('Hit Rate')
 plt.show()
 
-# Compute the area using the composite Simpson's rule.
-# area = simps(hit_rate, x=false_alarm)
-# print("area =", area)
-
+# Compute the area using the Trapezoid rule
 area = np.trapz(hit_rate, x=false_alarm)
 print("area =", area)
-
-# for i in range(len(hit_rate)):
-#     Area = (hit_rate[i])*(false_alarm[i]-false_alarm[i-1])
-
-# Area = -1*np.trapz(hit_rate,false_alarm)
-# print(Area)
