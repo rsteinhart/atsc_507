@@ -1,9 +1,14 @@
+# %% [markdown]
+# ATSC 507 Homework 11  
+# Rachel Steinhart  
+# April 18, 2020
+
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
 
-# %% 
+# %%
 # A19
 F = [5.3, 5.4, 5.5, 5.4, 5.5, 5.4, 5.5, 5.6, 5.6, 5.6, 5.6, 5.6, 5.8, 5.7, 5.6, 5.7, 5.9, 5.8, 5.7, 5.8]
 F = np.array(F)
@@ -166,6 +171,9 @@ noj = np.array([3,3,1,2,0])
 ratio = noj/nj
 
 plt.plot(pj,ratio)
+plt.title('Reliability Diagram')
+plt.xlabel('Probability')
+plt.ylabel('Ratio')
 plt.show()
 # Relative reliability 
 num = (((nj*pj)-noj)**2).sum(axis=0,dtype='float')
@@ -194,6 +202,7 @@ eighty = np.array([0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,1,0,1])
 ninety = np.array([0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1])
 hundred = np.array([0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0])
 
+# Calculate a,b,c,d for each probability
 a0 = np.zeros(len(day))
 b0 = np.zeros(len(day))
 c0 = np.zeros(len(day))
@@ -367,7 +376,7 @@ b = np.array([np.sum(b0), np.sum(b10), np.sum(b20), np.sum(b30), np.sum(b40), np
 c = np.array([np.sum(c0), np.sum(c10), np.sum(c20), np.sum(c30), np.sum(c40), np.sum(c50), np.sum(c60), np.sum(c70), np.sum(c80), np.sum(c90), np.sum(c100)])
 d = np.array([np.sum(d0), np.sum(d10), np.sum(d20), np.sum(d30), np.sum(d40), np.sum(d50), np.sum(d60), np.sum(d70), np.sum(d80), np.sum(d90), np.sum(d100)])
 
-
+# Calculate hit rate and false alarm rate
 for i in range(11):
     hit_rate[i] = a[i]/(a[i]+c[i])
     false_alarm[i] = b[i]/(b[i]+d[i])
