@@ -7,20 +7,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
+import pandas as pd
 
 # %%
 # A19
 F = [5.3, 5.4, 5.5, 5.4, 5.5, 5.4, 5.5, 5.6, 5.6, 5.6, 5.6, 5.6, 5.8, 5.7, 5.6, 5.7, 5.9, 5.8, 5.7, 5.8]
-F = np.array(F)
+F = np.array(F) # kPa
 
 V = [5.3, 5.3, 5.3, 5.4, 5.4, 5.3, 5.4, 5.5, 5.5, 5.4, 5.5, 5.5, 5.7, 5.5, 5.6, 5.6, 5.8, 5.7, 5.6, 5.6]
-V = np.array(V)
+V = np.array(V) # kPa
 
 A = [5.2,5.3,5.4,5.3,5.3,5.4,5.5,5.4,5.4,5.5,5.6,5.5,5.5,5.6,5.7,5.6,5.6,5.7,5.8,5.7]
-A = np.array(A)
+A = np.array(A) # kPa
 
 C = [5.4,5.4,5.4,5.4,5.4,5.4,5.4,5.4,5.5,5.5,5.5,5.5,5.6,5.6,5.6,5.6,5.7,5.7,5.7,5.7]
-C = np.array(C)
+C = np.array(C) #kPa
 # %%
 # a) Mean forecast error
 
@@ -28,41 +29,41 @@ F_ave = (F.sum(axis =0, dtype='float'))/len(F)
 V_ave = (V.sum(axis =0, dtype='float'))/len(V)
 
 ME = F_ave - V_ave
-print('The mean forecast error is', ME)
+print('The mean forecast error is ' + str(round(ME,4)) + ' kPa')
 
 # %%
 # b) mean persistence error
 A_ave = (A.sum(axis =0, dtype='float'))/len(A)
 
 MPE = A_ave - V_ave
-print('The mean persistence error is', MPE)
+print('The mean persistence error is '+ str(round(MPE,4)) + ' kPa')
 
 # %%
 # c) mean absolute forecast error
 f_v = F - V
 MAE = (f_v.sum(axis =0, dtype='float'))/len(f_v)
-print('The mean absolute forecast error is', MAE)
+print('The mean absolute forecast error is ' + str(round(MAE,4)) + ' kPA')
 # %%
 # d) mean squared forecast error
 fv2 = f_v*f_v
 MSE = (fv2.sum(axis =0, dtype='float'))/len(fv2)
-print('The mean squared forecast error is', MSE)
+print('The mean squared forecast error is '+ str(round(MSE,4)) + ' kPa^2')
 
 # %%
 # e) mean squared climatology error
 cv2 = (C-V)**2
 MSEC = (cv2.sum(axis =0, dtype='float'))/len(cv2)
-print('The mean squared climatology error is', MSEC)
+print('The mean squared climatology error is '+ str(round(MSEC,4)) + ' kPa^2')
 
 # %%
 # f) mean squared forecast error skill score
 MSESS = 1 - (MSE/MSEC)
-print('The mean squared forecast error skill score is', MSESS)
+print('The mean squared forecast error skill score is '+ str(round(MSESS,4)))
 
 # %%
 # g) RMS forecast score
 RMSEF = np.sqrt(MSE)
-print('The RMS forecast score is', RMSEF)
+print('The RMS forecast score is '+ str(round(RMSEF,4)) + 'kPa')
 
 # %%
 # h) correlation coefficient between forecast and verification
@@ -151,23 +152,35 @@ k = np.linspace(0,20,21)
 k = np.array(k)
 pk = [0.9,0.85,0.8,0.75,0.7,0.65,0.6,0.55,0.5,0.45,0.4,0.35,0.3,0.25,0.2,0.15,0.1,0.05,0.02,0]
 pk = np.array(pk)
-ok = [1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,1,0,0,0,0]
-ok = np.array(ok)
+# ok = [1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,1,0,0,0,0]
+# ok = np.array(ok)
+ok = np.array([1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,1,0,0,0,0])
+N = 20
 
 # Brier Skill Score
-num = ((pk-ok)**2).sum(axis=0,dtype='float')
-den_1 = ok.sum(axis=0,dtype='float')
-den_2 = len(k)- den_1
+# num = ((pk-ok)**2).sum(axis=0,dtype='float')
+num = sum((pk-ok)**2)
+# den_1 = ok.sum(axis=0,dtype='float')
+den_1 = sum(ok)
+den_2 = N- den_1
 
 BSS = 1 - num/(den_1*den_2)
 print('The Brier Skill Score is', BSS)
 
 # Probability bins of width delp=0.2
 delp=0.2
-pj = np.array([0.2,0.4,0.6,0.8,1.0])
-j = np.array([0,1,2,3,4,5])
-nj = np.array([4,4,4,4,4])
-noj = np.array([3,3,1,2,0])
+# pj = np.array([0.2,0.4,0.6,0.8,1.0,1.2])
+pj = np.array(np.arange(0,1.2,delp))
+# j = np.array([0,1,2,3,4,5])
+j = np.ceil((pk / delp))
+# nj = np.array([4,4,4,4,4])
+unique_j, nj = np.unique(j, return_counts=True)
+# noj = np.array([3,3,1,2,0])
+oj = j[ok==1]
+unique_oj, n_oj = np.unique(oj, return_counts=True)
+
+noj = np.append(0, n_oj)
+
 ratio = noj/nj
 
 plt.plot(pj,ratio)
@@ -181,6 +194,39 @@ num = (((nj*pj)-noj)**2).sum(axis=0,dtype='float')
 BSS_reliability = num/(den_1*den_2)
 print('The Reliability Brier Skill Score is', BSS_reliability)
 
+
+# %% create dataframes
+############## FIX #############################
+
+big_tbl_data = {"k": k,
+'pk': pk,
+'ok': ok,
+'bin': j}
+
+big_tbl = pd.DataFrame(big_tbl_data) 
+
+sml_tbl_data = {"j": unique_j,
+'pj': bins,
+'nj': nj,
+'noj': final_noj,
+'noj/nj': portion_verified}
+
+sml_tbl = pd.DataFrame(sml_tbl_data) 
+
+
+# C find reliability brier skill score
+
+# pj (bin centre) = bins
+# nj = nj
+# noj = final_noj
+
+BSS_r = sum(((nj*bins)-final_noj)**2)  / (sum(ok)) * (N - sum(ok))
+
+results_a22_data = {"BSS": [BSS],
+'BSS_r': [BSS_r]}
+
+###########################################################
+
 # %%
 # A23
 # 10-member ensemble forecast, probabilites that 24h acc precip >5mm
@@ -188,19 +234,19 @@ print('The Reliability Brier Skill Score is', BSS_reliability)
 # allowed probability theshold and plot the result as a ROC diagram 
 # find the area under the ROC curve and find the ROC skill score
 day = np.array(np.linspace(1,30,30))
-o = np.array([1,0,1,1,0,0,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,0,1,0,1])
-p = np.array([50,20,20,60,50,20,30,90,40,30,100,10,0,10,80,60,70,90,80,70,10,10,0,0,80,0,0,100,10,90])
-zero = np.array([1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,1,0,0,1,1,1])
-ten = np.array([1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,1,0,0,1,1,1])
-twenty = np.array([1,0,0,1,1,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
-thirty = np.array([1,0,0,1,1,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
-fourty = np.array([1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
-fifty = np.array([1,0,0,1,1,0,0,1,0,0,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
-sixty = np.array([0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
-seventy = np.array([0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,1,1,1,1,0,0,0,0,1,0,0,1,0,1])
-eighty = np.array([0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,1,0,1])
-ninety = np.array([0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1])
-hundred = np.array([0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0])
+o =       np.array([1,0,1,1,0,0,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,0,1,0,1])
+p =       np.array([50,20,20,60,50,20,30,90,40,30,100,10,0,10,80,60,70,90,80,70,10,10,0,0,80,0,0,100,10,90])
+zero =    np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1,1 ,1,1,1  ,1, 1])
+ten =     np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 0,1, 1, 1, 1, 1, 1, 1, 1, 1, 0,0,1 ,0,0,1  ,1, 1])
+twenty =  np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  0, 0,0, 1, 1, 1, 1, 1, 1, 0, 0, 0,0,1 ,0,0,1  ,0, 1])
+thirty =  np.array([1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1,  0, 0,0, 1, 1, 1, 1, 1, 1, 0, 0, 0,0,1 ,0,0,1  ,0, 1])
+fourty =  np.array([1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1,  0, 0,0, 1, 1, 1, 1, 1, 1, 0, 0, 0,0,1 ,0,0,1  ,0, 1])
+fifty =   np.array([1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1,  0, 0,0, 1, 1, 1, 1, 1, 1, 0, 0, 0,0,1 ,0,0,1  ,0, 1])
+sixty =   np.array([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1,  0, 0,0, 1, 1, 1, 1, 1, 1, 0, 0, 0,0,1 ,0,0,1  ,0, 1])
+seventy = np.array([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,  0, 0,0, 1, 0, 1, 1, 1, 1, 0, 0, 0,0,1 ,0,0,1  ,0, 1])
+eighty =  np.array([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,  0, 0,0, 1, 0, 0, 1, 1, 0, 0, 0, 0,0,1 ,0,0,1  ,0, 1])
+ninety =  np.array([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,  0, 0,0, 0, 0, 0, 1, 0, 0, 0, 0, 0,0,0 ,0,0,1  ,0, 1])
+hundred = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,  0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0 ,0,0,1  ,0, 0])
 
 # Calculate a,b,c,d for each probability
 a0 = np.zeros(len(day))
@@ -211,12 +257,17 @@ d0 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and zero[i]==1:
         a0[i]=1
-    if o[i]==0 and zero[i]==1:
+    elif o[i]==0 and zero[i]==1:
         b0[i]=1
-    if o[i]==1 and zero[i]==0:
+    elif o[i]==1 and zero[i]==0:
         c0[i]=1
-    if o[i]==0 and zero[i]==0:
+    elif o[i]==0 and zero[i]==0:
         d0[i]=1
+    else:
+        a0[i]=0
+        b0[i]=0
+        c0[i]=0
+        d0[i]=0
 
 a10 = np.zeros(len(day))
 b10 = np.zeros(len(day))
@@ -226,11 +277,11 @@ d10 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and ten[i]==1:
         a10[i]=1
-    if o[i]==0 and ten[i]==1:
+    elif o[i]==0 and ten[i]==1:
         b10[i]=1
-    if o[i]==1 and ten[i]==0:
+    elif o[i]==1 and ten[i]==0:
         c10[i]=1
-    if o[i]==0 and ten[i]==0:
+    elif o[i]==0 and ten[i]==0:
         d10[i]=1
 
 a20 = np.zeros(len(day))
@@ -241,11 +292,11 @@ d20 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and twenty[i]==1:
         a20[i]=1
-    if o[i]==0 and twenty[i]==1:
+    elif o[i]==0 and twenty[i]==1:
         b20[i]=1
-    if o[i]==1 and twenty[i]==0:
+    elif o[i]==1 and twenty[i]==0:
         c20[i]=1
-    if o[i]==0 and twenty[i]==0:
+    elif o[i]==0 and twenty[i]==0:
         d20[i]=1
 
 a30 = np.zeros(len(day))
@@ -256,11 +307,11 @@ d30 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and thirty[i]==1:
         a30[i]=1
-    if o[i]==0 and thirty[i]==1:
+    elif o[i]==0 and thirty[i]==1:
         b30[i]=1
-    if o[i]==1 and thirty[i]==0:
+    elif o[i]==1 and thirty[i]==0:
         c30[i]=1
-    if o[i]==0 and thirty[i]==0:
+    elif o[i]==0 and thirty[i]==0:
         d30[i]=1
 
 a40 = np.zeros(len(day))
@@ -271,11 +322,11 @@ d40 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and fourty[i]==1:
         a40[i]=1
-    if o[i]==0 and fourty[i]==1:
+    elif o[i]==0 and fourty[i]==1:
         b40[i]=1
-    if o[i]==1 and fourty[i]==0:
+    elif o[i]==1 and fourty[i]==0:
         c40[i]=1
-    if o[i]==0 and fourty[i]==0:
+    elif o[i]==0 and fourty[i]==0:
         d40[i]=1
 
 a50 = np.zeros(len(day))
@@ -286,11 +337,11 @@ d50 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and fifty[i]==1:
         a50[i]=1
-    if o[i]==0 and fifty[i]==1:
+    elif o[i]==0 and fifty[i]==1:
         b50[i]=1
-    if o[i]==1 and fifty[i]==0:
+    elif o[i]==1 and fifty[i]==0:
         c50[i]=1
-    if o[i]==0 and fifty[i]==0:
+    elif o[i]==0 and fifty[i]==0:
         d50[i]=1
 
 a60 = np.zeros(len(day))
@@ -301,11 +352,11 @@ d60 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and sixty[i]==1:
         a60[i]=1
-    if o[i]==0 and sixty[i]==1:
+    elif o[i]==0 and sixty[i]==1:
         b60[i]=1
-    if o[i]==1 and sixty[i]==0:
+    elif o[i]==1 and sixty[i]==0:
         c60[i]=1
-    if o[i]==0 and sixty[i]==0:
+    elif o[i]==0 and sixty[i]==0:
         d60[i]=1
 
 a70 = np.zeros(len(day))
@@ -316,11 +367,11 @@ d70 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and seventy[i]==1:
         a70[i]=1
-    if o[i]==0 and seventy[i]==1:
+    elif o[i]==0 and seventy[i]==1:
         b70[i]=1
-    if o[i]==1 and seventy[i]==0:
+    elif o[i]==1 and seventy[i]==0:
         c70[i]=1
-    if o[i]==0 and seventy[i]==0:
+    elif o[i]==0 and seventy[i]==0:
         d70[i]=1
 
 a80 = np.zeros(len(day))
@@ -331,11 +382,11 @@ d80 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and eighty[i]==1:
         a80[i]=1
-    if o[i]==0 and eighty[i]==1:
+    elif o[i]==0 and eighty[i]==1:
         b80[i]=1
-    if o[i]==1 and eighty[i]==0:
+    elif o[i]==1 and eighty[i]==0:
         c80[i]=1
-    if o[i]==0 and eighty[i]==0:
+    elif o[i]==0 and eighty[i]==0:
         d80[i]=1
 
 a90 = np.zeros(len(day))
@@ -346,11 +397,11 @@ d90 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and ninety[i]==1:
         a90[i]=1
-    if o[i]==0 and ninety[i]==1:
+    elif o[i]==0 and ninety[i]==1:
         b90[i]=1
-    if o[i]==1 and ninety[i]==0:
+    elif o[i]==1 and ninety[i]==0:
         c90[i]=1
-    if o[i]==0 and ninety[i]==0:
+    elif o[i]==0 and ninety[i]==0:
         d90[i]=1
 
 a100 = np.zeros(len(day))
@@ -361,11 +412,11 @@ d100 = np.zeros(len(day))
 for i in range(len(day)):
     if o[i]==1 and hundred[i]==1:
         a100[i]=1
-    if o[i]==0 and hundred[i]==1:
+    elif o[i]==0 and hundred[i]==1:
         b100[i]=1
-    if o[i]==1 and hundred[i]==0:
+    elif o[i]==1 and hundred[i]==0:
         c100[i]=1
-    if o[i]==0 and hundred[i]==0:
+    elif o[i]==0 and hundred[i]==0:
         d100[i]=1
 
 hit_rate = np.zeros(11)
@@ -377,7 +428,7 @@ c = np.array([np.sum(c0), np.sum(c10), np.sum(c20), np.sum(c30), np.sum(c40), np
 d = np.array([np.sum(d0), np.sum(d10), np.sum(d20), np.sum(d30), np.sum(d40), np.sum(d50), np.sum(d60), np.sum(d70), np.sum(d80), np.sum(d90), np.sum(d100)])
 
 # Calculate hit rate and false alarm rate
-for i in range(11):
+for i in range(len(a)):
     hit_rate[i] = a[i]/(a[i]+c[i])
     false_alarm[i] = b[i]/(b[i]+d[i])
 
@@ -386,11 +437,16 @@ hit_rate = np.array(np.sort(hit_rate))
 false_alarm = np.nan_to_num(false_alarm)
 false_alarm = np.array(np.sort(false_alarm))
 
+table = {'Hit Rate': hit_rate,
+'False Alarm': false_alarm}
 
-print('Hit rate =',hit_rate)
-print('False alarm rate = ',false_alarm)
+table = pd.DataFrame(table) 
+print(table)
 
-plt.plot(false_alarm,hit_rate,'o')
+# print('Hit rate =',hit_rate)
+# print('False alarm rate = ',false_alarm)
+
+plt.plot(false_alarm,hit_rate,'.')
 plt.title('ROC plot')
 plt.xlabel('False Alarm Rate')
 plt.ylabel('Hit Rate')
@@ -398,4 +454,4 @@ plt.show()
 
 # Compute the area using the Trapezoid rule
 area = np.trapz(hit_rate, x=false_alarm)
-print("area =", area)
+print("area =", round(area,4))
